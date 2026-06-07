@@ -16,7 +16,7 @@ const HERO_STATS = [
 
 export default function TypesPage() {
   return (
-    <div className="min-h-screen">
+    <div style={{ minHeight: "100vh", width: "100%" }}>
       {/* topbar */}
       <header
         className="sticky top-0 z-50 border-b border-[var(--border)]"
@@ -59,8 +59,8 @@ export default function TypesPage() {
       </header>
 
       {/* hero */}
-      <section className="px-6 pb-9 pt-16 text-center">
-        <div className="mx-auto max-w-[1280px]">
+      <section style={{ padding: "64px 0 36px", textAlign: "center" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <span
             className="mb-[18px] inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 font-mono text-[12px] tracking-[0.18em] text-[#3b82f6]"
           >
@@ -70,7 +70,7 @@ export default function TypesPage() {
             />
             14 CAREERS · 5 CATEGORIES
           </span>
-          <h1 className="font-hero text-[clamp(34px,6vw,60px)] font-black leading-[1.08] tracking-[-0.02em]">
+          <h1 style={{ fontSize: "clamp(34px,6vw,60px)", fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1.08 }}>
             あなたに合う
             <br />
             <span className="gradient-text">IT職種</span>を見つけよう

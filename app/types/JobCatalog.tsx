@@ -31,10 +31,13 @@ export default function JobCatalog() {
     <>
       {/* sticky filter tabs */}
       <div
-        className="sticky z-40 py-3.5"
-        style={{ top: 60, background: "linear-gradient(var(--bg), var(--bg) 70%, transparent)" }}
+        style={{
+          position: "sticky", top: 60, zIndex: 40, width: "100%",
+          padding: "14px 0",
+          background: "linear-gradient(var(--bg), var(--bg) 70%, transparent)",
+        }}
       >
-        <div className="mx-auto flex max-w-[1280px] flex-wrap justify-center gap-2.5 px-6">
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
           {FILTERS.map((f) => {
             const c = f.key !== "all" ? CATEGORIES[f.key] : null;
             const active = filter === f.key;
@@ -66,8 +69,8 @@ export default function JobCatalog() {
       </div>
 
       {/* card grid */}
-      <main className="mx-auto max-w-[1280px] px-6">
-        <div className="grid gap-5 pb-[90px] pt-[18px]" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(272px, 1fr))" }}>
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(272px, 1fr))", gap: 20, paddingTop: 18, paddingBottom: 90 }}>
           {list.map((job, i) => (
             <JobCard key={job.id} job={job} index={i} />
           ))}
@@ -77,10 +80,10 @@ export default function JobCatalog() {
         </div>
       </main>
 
-      <footer className="border-t border-[var(--border)] py-7">
-        <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-3 px-6 text-[12px] text-[var(--muted)]">
+      <footer style={{ borderTop: "1px solid var(--border)", padding: "30px 0" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, fontSize: 12, color: "var(--muted)" }}>
           <span>© 2026 IT Career Lab</span>
-          <span className="font-mono text-[11px]">
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11 }}>
             /types · {list.length} of {JOBS.length} jobs{activeCat ? ` · ${activeCat.label}` : ""}
           </span>
         </div>
