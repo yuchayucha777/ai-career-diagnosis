@@ -1,6 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@700;900&display=swap");
 @import "tailwindcss";
 
+/* ===== Tailwind v4 デザイントークン ===== */
+@theme inline {
+  --color-bg: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-2: #1c2230;
+  --color-border: #30363d;
+  --color-text: #e6edf3;
+  --color-muted: #7d8590;
+  --color-brand-blue: #3b82f6;
+  --color-brand-purple: #8b5cf6;
+
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-jp: "Noto Sans JP", system-ui, sans-serif;
+}
+
 :root {
   --bg: #0d1117;
   --surface: #161b22;
@@ -135,3 +150,62 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance
 @keyframes blink { 0%, 100% { opacity: 0.8; } 50% { opacity: 0; } }
 
 @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== IT職種図鑑 カード専用ユーティリティ ===== */
+
+/* アコーディオン（grid-template-rows トリック） */
+.accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.accordion[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+/* カード入場アニメーション（transform のみ＝停止時も必ず可視） */
+@keyframes rise {
+  from { transform: translateY(16px); }
+  to   { transform: none; }
+}
+.card-rise {
+  animation: rise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-rise { animation: none; transform: none; }
+  .card-rise * { transition-duration: 0.01ms !important; }
+}
+
+/* グラデーション枠線（hover / open で表示） */
+.glow-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  opacity: 0;
+  transition: opacity 0.3s;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.glow-ring:hover::before,
+.glow-ring[data-open="true"]::before {
+  opacity: 0.85;
+}
+
+/* イラスト領域のドットテクスチャ */
+.illust-dots::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1.4px);
+  background-size: 16px 16px;
+  opacity: 0.4;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000, transparent 75%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
