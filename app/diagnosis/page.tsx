@@ -403,13 +403,18 @@ function ResultView({
           </div>
         </div>
 
-        {/* Score ranking */}
+        {/* Score ranking - top 6 */}
         <div className="card animate-fade-up" style={{ padding: "28px 28px", marginBottom: 24, animationDelay: "0.2s" }}>
-          <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 20 }}>
-            SCORE BREAKDOWN
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+            <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+              SCORE BREAKDOWN
+            </div>
+            <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>
+              上位6件 / 14職種
+            </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {rankedTypes.map(({ type, percentage }, i) => (
+            {rankedTypes.slice(0, 6).map(({ type, percentage }, i) => (
               <div key={type.id}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
                   <span style={{ fontSize: 18 }}>{type.emoji}</span>
