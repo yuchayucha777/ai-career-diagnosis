@@ -334,13 +334,117 @@ export const QUESTIONS: Question[] = [
   },
 ];
 
+export const BEGINNER_QUESTIONS: Question[] = [
+  {
+    id: 1,
+    text: "どんな作業をしているときが一番楽しいですか？",
+    options: [
+      { text: "画面やデザインなど「見た目」を作ること", scores: { frontend: 3, product: 1 } },
+      { text: "データや数字を分析・整理すること", scores: { data: 3, backend: 1 } },
+      { text: "仕組みや構造を考えて設計すること", scores: { backend: 3, infra: 1 } },
+      { text: "チームで協力して一つのものを完成させること", scores: { techlead: 2, product: 2 } },
+    ],
+  },
+  {
+    id: 2,
+    text: "自分の得意なことに近いのは？",
+    options: [
+      { text: "細かい部分まで気づいて完成度を上げること", scores: { frontend: 2, devops: 2 } },
+      { text: "論理的・数学的に考えて解決すること", scores: { data: 3, backend: 2 } },
+      { text: "人に分かりやすく説明・伝えること", scores: { techlead: 2, product: 2 } },
+      { text: "新しいことへの好奇心・試行錯誤すること", scores: { fullstack: 3, frontend: 1 } },
+    ],
+  },
+  {
+    id: 3,
+    text: "問題が起きたとき、あなたはどうしますか？",
+    options: [
+      { text: "ネットで原因を調べて解決策を探す", scores: { infra: 3, devops: 2 } },
+      { text: "先輩や友人に相談して解決の糸口を見つける", scores: { techlead: 2, product: 2 } },
+      { text: "じっくり一人で考えてから計画を立てる", scores: { backend: 3, data: 1 } },
+      { text: "まず手を動かしていろいろ試してみる", scores: { fullstack: 3, frontend: 1 } },
+    ],
+  },
+  {
+    id: 4,
+    text: "IT職でやってみたい仕事のイメージに近いのは？",
+    options: [
+      { text: "誰でも使いやすい画面・アプリを作る", scores: { frontend: 3, product: 2 } },
+      { text: "データで会社の判断をサポートする", scores: { data: 3, product: 1 } },
+      { text: "システムが安定して動く仕組みを管理する", scores: { infra: 3, devops: 2 } },
+      { text: "プロダクト全体を企画して作り上げる", scores: { product: 3, fullstack: 1 } },
+    ],
+  },
+  {
+    id: 5,
+    text: "チームの中でどんな役割が自分に合っていると思いますか？",
+    options: [
+      { text: "手を動かしてコツコツと実装する", scores: { frontend: 2, backend: 2 } },
+      { text: "全体の方向性・方針をリードする", scores: { techlead: 3, backend: 1 } },
+      { text: "改善アイデアを出してチームを引っ張る", scores: { product: 3, data: 1 } },
+      { text: "自動化や仕組みで仕事を効率化する", scores: { devops: 3, infra: 2 } },
+    ],
+  },
+  {
+    id: 6,
+    text: "何かを学ぶとき、どんな方法が好きですか？",
+    options: [
+      { text: "本やドキュメントで体系的に学ぶ", scores: { data: 2, backend: 2 } },
+      { text: "実際に作りながら試行錯誤して学ぶ", scores: { fullstack: 3, frontend: 1 } },
+      { text: "動画やビジュアルを見てイメージで理解する", scores: { frontend: 2, product: 2 } },
+      { text: "人から教わって質問しながら学ぶ", scores: { techlead: 2, product: 2 } },
+    ],
+  },
+  {
+    id: 7,
+    text: "こだわりを持っているのはどの分野ですか？",
+    options: [
+      { text: "デザイン・見た目・使いやすさ", scores: { frontend: 3, product: 2 } },
+      { text: "速さ・効率・自動化", scores: { devops: 3, infra: 2 } },
+      { text: "正確さ・安全性・品質", scores: { devops: 2, data: 2, infra: 1 } },
+      { text: "数字・成果・ビジネス効果", scores: { data: 3, product: 2 } },
+    ],
+  },
+  {
+    id: 8,
+    text: "ITで将来実現したいことに近いのは？",
+    options: [
+      { text: "Webサービスやアプリをゼロから作りリリースする", scores: { fullstack: 3, frontend: 1 } },
+      { text: "AIやデータで社会の課題を解決する", scores: { data: 3, product: 1 } },
+      { text: "インフラやセキュリティでシステムを守る", scores: { infra: 3, devops: 2 } },
+      { text: "チームをまとめてプロダクトを成長させる", scores: { product: 3, techlead: 2 } },
+    ],
+  },
+  {
+    id: 9,
+    text: "好きな仕事スタイルは？",
+    options: [
+      { text: "一つのことに集中して深く追求する", scores: { backend: 2, data: 2 } },
+      { text: "チームで役割を分担してテンポよく進める", scores: { fullstack: 2, techlead: 2 } },
+      { text: "幅広く関わって何でも対応する", scores: { fullstack: 3, product: 1 } },
+      { text: "最新技術を積極的に取り入れて試す", scores: { devops: 2, fullstack: 2 } },
+    ],
+  },
+  {
+    id: 10,
+    text: "5年後、どんな自分でいたいですか？",
+    options: [
+      { text: "特定分野のスペシャリスト・第一人者", scores: { frontend: 2, backend: 2, data: 2 } },
+      { text: "何でもできるフルスタックエンジニア", scores: { fullstack: 3, techlead: 1 } },
+      { text: "技術とビジネスをつなぐ橋渡し役", scores: { product: 3, techlead: 1 } },
+      { text: "自分のサービスを作って世に出す起業家", scores: { fullstack: 2, product: 2 } },
+    ],
+  },
+];
+
 export interface DiagnosisResult {
   topType: JobType;
   scores: Record<JobTypeId, number>;
   rankedTypes: Array<{ type: JobType; score: number; percentage: number }>;
 }
 
-export function calculateDiagnosis(answers: number[]): DiagnosisResult {
+export function calculateDiagnosis(answers: number[], beginnerMode = false): DiagnosisResult {
+  const questionsToUse = beginnerMode ? BEGINNER_QUESTIONS : QUESTIONS;
   const scores: Record<JobTypeId, number> = {
     frontend: 0,
     backend: 0,
@@ -353,7 +457,7 @@ export function calculateDiagnosis(answers: number[]): DiagnosisResult {
   };
 
   answers.forEach((optionIndex, questionIndex) => {
-    const question = QUESTIONS[questionIndex];
+    const question = questionsToUse[questionIndex];
     if (!question) return;
     const option = question.options[optionIndex];
     if (!option) return;

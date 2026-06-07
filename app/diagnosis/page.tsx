@@ -1,13 +1,114 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { QUESTIONS, JOB_TYPES, calculateDiagnosis, type JobTypeId, type DiagnosisResult } from "@/lib/diagnosis";
+import { useState } from "react";
+import { QUESTIONS, BEGINNER_QUESTIONS, JOB_TYPES, calculateDiagnosis, type DiagnosisResult } from "@/lib/diagnosis";
 
-type Phase = "quiz" | "result";
+type Phase = "select" | "quiz" | "result";
+
+function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => void }) {
+  return (
+    <main style={{ minHeight: "100vh", background: "var(--bg)", display: "flex", flexDirection: "column" }} className="grid-bg">
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px" }}>
+        <Link href="/" style={{ color: "var(--muted)", fontSize: 13, textDecoration: "none", fontFamily: "'Space Mono', monospace" }}>
+          ← ホーム
+        </Link>
+      </div>
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
+        <div style={{ width: "100%", maxWidth: 600 }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
+              STEP 0 / IT職種診断
+            </div>
+            <h1 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+              あなたのIT経験を教えてください
+            </h1>
+            <p style={{ color: "var(--muted)", fontSize: 14 }}>
+              回答に合わせた質問を出題します
+            </p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <button
+              onClick={() => onSelect(true)}
+              className="card card-hover"
+              style={{
+                padding: "32px 24px",
+                cursor: "pointer",
+                textAlign: "center",
+                border: "1px solid var(--border)",
+                background: "var(--surface)",
+                color: "inherit",
+                fontFamily: "inherit",
+                transition: "all 0.2s",
+              }}
+            >
+              <div style={{ fontSize: 40, marginBottom: 16 }}>🌱</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
+                IT未経験
+              </div>
+              <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
+                これからITに転職したい<br />
+                プログラミングを勉強中
+              </div>
+              <div style={{
+                marginTop: 20,
+                display: "inline-block",
+                padding: "8px 18px", borderRadius: 8,
+                background: "rgba(63,185,80,0.12)",
+                border: "1px solid rgba(63,185,80,0.3)",
+                fontSize: 12, color: "#3fb950",
+                fontFamily: "'Space Mono', monospace",
+              }}>
+                日常的な感覚で答えられる質問
+              </div>
+            </button>
+
+            <button
+              onClick={() => onSelect(false)}
+              className="card card-hover"
+              style={{
+                padding: "32px 24px",
+                cursor: "pointer",
+                textAlign: "center",
+                border: "1px solid var(--border)",
+                background: "var(--surface)",
+                color: "inherit",
+                fontFamily: "inherit",
+                transition: "all 0.2s",
+              }}
+            >
+              <div style={{ fontSize: 40, marginBottom: 16 }}>⚡</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
+                IT経験者
+              </div>
+              <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
+                現在エンジニアとして<br />
+                働いている・働いていた
+              </div>
+              <div style={{
+                marginTop: 20,
+                display: "inline-block",
+                padding: "8px 18px", borderRadius: 8,
+                background: "rgba(59,130,246,0.12)",
+                border: "1px solid rgba(59,130,246,0.3)",
+                fontSize: 12, color: "#93c5fd",
+                fontFamily: "'Space Mono', monospace",
+              }}>
+                現場目線の専門的な質問
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
 
 export default function DiagnosisPage() {
-  const [phase, setPhase] = useState<Phase>("quiz");
+  const [phase, setPhase] = useState<Phase>("select");
+  const [beginnerMode, setBeginnerMode] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [selected, setSelected] = useState<number | null>(null);
@@ -15,8 +116,9 @@ export default function DiagnosisPage() {
   const [animating, setAnimating] = useState(false);
   const [showBars, setShowBars] = useState(false);
 
-  const question = QUESTIONS[currentQ];
-  const progress = (currentQ / QUESTIONS.length) * 100;
+  const questions = beginnerMode ? BEGINNER_QUESTIONS : QUESTIONS;
+  const question = questions[currentQ];
+  const progress = (currentQ / questions.length) * 100;
 
   function handleSelect(optionIndex: number) {
     if (animating) return;
@@ -24,8 +126,8 @@ export default function DiagnosisPage() {
     setAnimating(true);
     setTimeout(() => {
       const newAnswers = [...answers, optionIndex];
-      if (currentQ + 1 >= QUESTIONS.length) {
-        const res = calculateDiagnosis(newAnswers);
+      if (currentQ + 1 >= questions.length) {
+        const res = calculateDiagnosis(newAnswers, beginnerMode);
         setResult(res);
         setPhase("result");
         setTimeout(() => setShowBars(true), 400);
@@ -39,16 +141,28 @@ export default function DiagnosisPage() {
   }
 
   function handleRetry() {
-    setPhase("quiz");
+    setPhase("select");
     setCurrentQ(0);
     setAnswers([]);
     setSelected(null);
     setResult(null);
     setShowBars(false);
+    setBeginnerMode(false);
+  }
+
+  if (phase === "select") {
+    return (
+      <ExperienceSelectView
+        onSelect={(beginner) => {
+          setBeginnerMode(beginner);
+          setPhase("quiz");
+        }}
+      />
+    );
   }
 
   if (phase === "result" && result) {
-    return <ResultView result={result} showBars={showBars} onRetry={handleRetry} />;
+    return <ResultView result={result} showBars={showBars} beginnerMode={beginnerMode} onRetry={handleRetry} />;
   }
 
   return (
@@ -59,9 +173,20 @@ export default function DiagnosisPage() {
           ← ホーム
         </Link>
         <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-        <span style={{ color: "var(--muted)", fontSize: 12, fontFamily: "'Space Mono', monospace" }}>
-          {currentQ + 1} / {QUESTIONS.length}
-        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {beginnerMode && (
+            <span style={{
+              padding: "3px 10px", borderRadius: 20, fontSize: 11,
+              background: "rgba(63,185,80,0.12)", border: "1px solid rgba(63,185,80,0.3)",
+              color: "#3fb950", fontFamily: "'Space Mono', monospace",
+            }}>
+              未経験モード
+            </span>
+          )}
+          <span style={{ color: "var(--muted)", fontSize: 12, fontFamily: "'Space Mono', monospace" }}>
+            {currentQ + 1} / {questions.length}
+          </span>
+        </div>
       </div>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
@@ -106,7 +231,7 @@ export default function DiagnosisPage() {
                 Q{currentQ + 1}
               </div>
               <span style={{ color: "var(--muted)", fontSize: 12, fontFamily: "'Space Mono', monospace" }}>
-                残り {QUESTIONS.length - currentQ - 1} 問
+                残り {questions.length - currentQ - 1} 問
               </span>
             </div>
 
@@ -154,10 +279,12 @@ export default function DiagnosisPage() {
 function ResultView({
   result,
   showBars,
+  beginnerMode,
   onRetry,
 }: {
   result: DiagnosisResult;
   showBars: boolean;
+  beginnerMode: boolean;
   onRetry: () => void;
 }) {
   const { topType, rankedTypes } = result;
@@ -191,6 +318,16 @@ function ResultView({
             <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
               DIAGNOSIS RESULT
             </div>
+            {beginnerMode && (
+              <span style={{
+                display: "inline-block", marginBottom: 8,
+                padding: "4px 12px", borderRadius: 20, fontSize: 11,
+                background: "rgba(63,185,80,0.12)", border: "1px solid rgba(63,185,80,0.3)",
+                color: "#3fb950", fontFamily: "'Space Mono', monospace",
+              }}>
+                未経験者向け診断
+              </span>
+            )}
           </div>
 
           <div
@@ -202,7 +339,6 @@ function ResultView({
               border: `1px solid ${topType.gradientFrom}40`,
             }}
           >
-            {/* BG gradient */}
             <div style={{
               position: "absolute", inset: 0,
               background: `radial-gradient(ellipse at top left, ${topType.gradientFrom}12 0%, transparent 60%)`,
@@ -210,7 +346,6 @@ function ResultView({
             }} />
 
             <div style={{ position: "relative", display: "flex", gap: 24, flexWrap: "wrap", alignItems: "flex-start" }}>
-              {/* Emoji */}
               <div style={{
                 width: 80, height: 80, borderRadius: 20, flexShrink: 0,
                 background: `${topType.gradientFrom}20`,
@@ -237,7 +372,6 @@ function ResultView({
               </div>
             </div>
 
-            {/* Details grid */}
             <div style={{ position: "relative", marginTop: 32, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
               <div style={{ padding: 16, borderRadius: 10, background: "rgba(0,0,0,0.3)", border: "1px solid var(--border)" }}>
                 <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 10, letterSpacing: 1 }}>STRENGTHS</div>
@@ -324,6 +458,18 @@ function ResultView({
             }}
           >
             次は市場価値チェック →
+          </Link>
+          <Link
+            href="/types"
+            style={{
+              padding: "12px 24px", borderRadius: 10,
+              border: "1px solid rgba(59,130,246,0.4)",
+              background: "rgba(59,130,246,0.08)",
+              color: "#93c5fd", fontSize: 14,
+              textDecoration: "none", display: "inline-block",
+            }}
+          >
+            全8タイプを見る
           </Link>
           <button
             onClick={onRetry}

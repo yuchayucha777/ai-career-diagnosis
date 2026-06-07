@@ -142,6 +142,27 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Types overview link */}
+        <div className="animate-fade-up" style={{ textAlign: "center", marginBottom: 24, animationDelay: "0.05s" }}>
+          <Link
+            href="/types"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 10,
+              padding: "10px 24px", borderRadius: 10,
+              border: "1px solid rgba(59,130,246,0.3)",
+              background: "rgba(59,130,246,0.06)",
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+          >
+            <span style={{ fontSize: 16 }}>🧬</span>
+            <span style={{ color: "#93c5fd", fontSize: 13, fontFamily: "'Space Mono', monospace" }}>
+              全8タイプ一覧を見る
+            </span>
+            <span style={{ color: "var(--muted)", fontSize: 12 }}>→</span>
+          </Link>
+        </div>
+
         {/* Two CTA cards */}
         <div style={{
           display: "grid",
