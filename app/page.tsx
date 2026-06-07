@@ -157,7 +157,7 @@ export default function HomePage() {
           >
             <span style={{ fontSize: 16 }}>🧬</span>
             <span style={{ color: "#93c5fd", fontSize: 13, fontFamily: "'Space Mono', monospace" }}>
-              全8タイプ一覧を見る
+              IT職種図鑑を見る（14職種）
             </span>
             <span style={{ color: "var(--muted)", fontSize: 12 }}>→</span>
           </Link>
