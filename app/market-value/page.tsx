@@ -122,7 +122,7 @@ export default function MarketValuePage() {
   const [beginnerMode, setBeginnerMode] = useState(false);
 
   // 経験者用
-  const [roleId, setRoleId] = useState<RoleId>("backend");
+  const [roleId, setRoleId] = useState<RoleId>("web");
   const [years, setYears] = useState(3);
   const [skills, setSkills] = useState<Set<SkillId>>(new Set());
   const [currentSalary, setCurrentSalary] = useState<number | "">("");
