@@ -20,7 +20,7 @@ export default function TypesPage() {
       {/* topbar */}
       <header
         className="sticky top-0 z-50 border-b border-[var(--border)]"
-        style={{ background: "rgba(13,17,23,.72)", backdropFilter: "blur(14px) saturate(140%)" }}
+        style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(14px) saturate(140%)" }}
       >
         <div className="mx-auto flex h-[60px] max-w-[1280px] items-center justify-between px-6">
           <div className="flex items-center gap-2.5 font-bold tracking-[-0.01em]">

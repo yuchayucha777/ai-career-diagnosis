@@ -59,7 +59,7 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
             <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
               STEP 1 / IT職種診断
             </div>
-            <h1 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+            <h1 style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
               IT経験はありますか？
             </h1>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -75,14 +75,14 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
                 padding: "36px 24px",
                 cursor: "pointer",
                 textAlign: "center",
-                border: "1px solid rgba(63,185,80,0.3)",
-                background: "rgba(63,185,80,0.06)",
+                border: "1px solid rgba(16,185,129,0.3)",
+                background: "rgba(16,185,129,0.06)",
                 color: "inherit",
                 fontFamily: "inherit",
                 transition: "all 0.2s",
               }}
             >
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 10 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 10 }}>
                 IT未経験
               </div>
               <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7 }}>
@@ -93,9 +93,9 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
                 marginTop: 20,
                 display: "inline-block",
                 padding: "6px 14px", borderRadius: 8,
-                background: "rgba(63,185,80,0.12)",
-                border: "1px solid rgba(63,185,80,0.3)",
-                fontSize: 11, color: "#3fb950",
+                background: "rgba(16,185,129,0.1)",
+                border: "1px solid rgba(16,185,129,0.25)",
+                fontSize: 11, color: "#059669",
                 fontFamily: "'Space Mono', monospace",
               }}>
                 12問
@@ -116,7 +116,7 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
                 transition: "all 0.2s",
               }}
             >
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 10 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 10 }}>
                 IT経験者
               </div>
               <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7 }}>
@@ -127,9 +127,9 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
                 marginTop: 20,
                 display: "inline-block",
                 padding: "6px 14px", borderRadius: 8,
-                background: "rgba(59,130,246,0.12)",
-                border: "1px solid rgba(59,130,246,0.3)",
-                fontSize: 11, color: "#93c5fd",
+                background: "rgba(99,102,241,0.1)",
+                border: "1px solid rgba(99,102,241,0.25)",
+                fontSize: 11, color: "#4f46e5",
                 fontFamily: "'Space Mono', monospace",
               }}>
                 職種別 15問
@@ -161,7 +161,7 @@ function JobSelectView({ onSelect, onBack }: { onSelect: (jobId: JobTypeId) => v
             <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
               STEP 2 / IT職種診断
             </div>
-            <h1 style={{ fontSize: 24, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+            <h1 style={{ fontSize: 24, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
               現在のIT職種を選んでください
             </h1>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -188,7 +188,7 @@ function JobSelectView({ onSelect, onBack }: { onSelect: (jobId: JobTypeId) => v
                     transition: "all 0.2s",
                   }}
                 >
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "#fff", lineHeight: 1.4 }}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", lineHeight: 1.4 }}>
                     {job.name}
                   </span>
                 </button>
@@ -317,9 +317,9 @@ export default function DiagnosisPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{
             padding: "3px 10px", borderRadius: 20, fontSize: 11,
-            background: isBeginner ? "rgba(63,185,80,0.12)" : "rgba(59,130,246,0.12)",
-            border: `1px solid ${isBeginner ? "rgba(63,185,80,0.3)" : "rgba(59,130,246,0.3)"}`,
-            color: isBeginner ? "#3fb950" : "#93c5fd",
+            background: isBeginner ? "rgba(16,185,129,0.1)" : "rgba(99,102,241,0.1)",
+            border: `1px solid ${isBeginner ? "rgba(16,185,129,0.25)" : "rgba(99,102,241,0.25)"}`,
+            color: isBeginner ? "#059669" : "#4f46e5",
             fontFamily: "'Space Mono', monospace",
           }}>
             {isBeginner ? "未経験" : JOB_TYPES[selectedJobId as JobTypeId]?.name ?? selectedJobId}
@@ -369,7 +369,7 @@ export default function DiagnosisPage() {
               </span>
             </div>
 
-            <h2 style={{ fontSize: 20, fontWeight: 700, color: "#fff", lineHeight: 1.5, marginBottom: 28 }}>
+            <h2 style={{ fontSize: 20, fontWeight: 700, color: "var(--text)", lineHeight: 1.5, marginBottom: 28 }}>
               {question.text}
             </h2>
 
@@ -460,8 +460,8 @@ function ResultView({
             <span style={{
               display: "inline-block",
               padding: "4px 14px", borderRadius: 20, fontSize: 11,
-              background: "rgba(63,185,80,0.12)", border: "1px solid rgba(63,185,80,0.3)",
-              color: "#3fb950", fontFamily: "'Space Mono', monospace",
+              background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)",
+              color: "#059669", fontFamily: "'Space Mono', monospace",
             }}>
               未経験者向け診断
             </span>
@@ -520,7 +520,7 @@ function ResultView({
               <div style={{ fontSize: 12, color: topType.gradientFrom, fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>
                 あなたのITタイプ
               </div>
-              <h1 style={{ fontSize: 28, fontWeight: 900, color: "#fff", marginBottom: 6, lineHeight: 1.2 }}>
+              <h1 style={{ fontSize: 28, fontWeight: 900, color: "var(--text)", marginBottom: 6, lineHeight: 1.2 }}>
                 {topType.name}
               </h1>
               <p style={{ color: topType.color, fontStyle: "italic", fontSize: 13, marginBottom: 24 }}>
@@ -552,7 +552,7 @@ function ResultView({
               </div>
 
               {/* STRENGTHS */}
-              <div style={{ padding: "14px 16px", borderRadius: 10, background: "rgba(0,0,0,0.3)", border: "1px solid var(--border)", marginBottom: 12 }}>
+              <div style={{ padding: "14px 16px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)", marginBottom: 12 }}>
                 <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 8, letterSpacing: 1 }}>STRENGTHS</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {topType.strengths.map((s) => (
@@ -570,7 +570,7 @@ function ResultView({
 
               {/* COMPANY / ROLES */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                <div style={{ padding: "12px 14px", borderRadius: 10, background: "rgba(0,0,0,0.3)", border: "1px solid var(--border)" }}>
+                <div style={{ padding: "12px 14px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
                   <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>COMPANY</div>
                   {topType.recommendedCompanyTypes.map((c) => (
                     <div key={c} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
@@ -579,7 +579,7 @@ function ResultView({
                     </div>
                   ))}
                 </div>
-                <div style={{ padding: "12px 14px", borderRadius: 10, background: "rgba(0,0,0,0.3)", border: "1px solid var(--border)" }}>
+                <div style={{ padding: "12px 14px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
                   <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>ROLES</div>
                   {topType.relatedRoles.map((r) => (
                     <div key={r} style={{ marginBottom: 3 }}>
@@ -597,7 +597,7 @@ function ResultView({
           <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 14 }}>
             WHY IT FITS YOU
           </div>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", marginBottom: 16 }}>
             あなたに向いている理由
           </h3>
           <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
@@ -619,15 +619,15 @@ function ResultView({
           className="animate-fade-up"
           style={{
             padding: "22px 26px", marginBottom: 16, borderRadius: 12,
-            background: "rgba(63,185,80,0.05)",
-            border: "1px solid rgba(63,185,80,0.2)",
-            borderLeft: "4px solid rgba(63,185,80,0.5)",
+            background: "rgba(16,185,129,0.05)",
+            border: "1px solid rgba(16,185,129,0.2)",
+            borderLeft: "4px solid rgba(16,185,129,0.5)",
             animationDelay: "0.2s",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
             <span style={{ fontSize: 14 }}>💬</span>
-            <span style={{ fontSize: 10, color: "#3fb950", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+            <span style={{ fontSize: 10, color: "#059669", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
               開発者からのアドバイス
             </span>
           </div>
@@ -653,7 +653,7 @@ function ResultView({
                   <span style={{ fontSize: i < 3 ? 17 : 12, width: 22, textAlign: "center", flexShrink: 0, color: i >= 3 ? "var(--muted)" : undefined }}>
                     {i < 3 ? medals[i] : `${i + 1}`}
                   </span>
-                  <span style={{ flex: 1, fontSize: 13, color: i === 0 ? "#fff" : "var(--muted)", fontWeight: i === 0 ? 700 : 400 }}>
+                  <span style={{ flex: 1, fontSize: 13, color: i === 0 ? "var(--text)" : "var(--muted)", fontWeight: i === 0 ? 700 : 400 }}>
                     {type.emoji} {type.name}
                   </span>
                   <span className="font-mono-display" style={{ fontSize: 12, color: i === 0 ? type.color : "var(--muted)" }}>
@@ -728,9 +728,9 @@ function ResultView({
             href="/types"
             style={{
               padding: "12px 24px", borderRadius: 10,
-              border: "1px solid rgba(59,130,246,0.4)",
-              background: "rgba(59,130,246,0.08)",
-              color: "#93c5fd", fontSize: 14,
+              border: "1px solid rgba(99,102,241,0.3)",
+              background: "rgba(99,102,241,0.08)",
+              color: "#4f46e5", fontSize: 14,
               textDecoration: "none", display: "inline-block",
             }}
           >

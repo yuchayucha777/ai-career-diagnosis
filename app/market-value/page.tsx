@@ -22,7 +22,7 @@ type Phase = "select" | "form" | "result";
 function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => void }) {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", display: "flex", flexDirection: "column" }} className="grid-bg">
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px" }}>
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", background: "var(--surface)" }}>
         <Link href="/" style={{ color: "var(--muted)", fontSize: 13, textDecoration: "none", fontFamily: "'Space Mono', monospace" }}>
           ← ホーム
         </Link>
@@ -31,10 +31,10 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
         <div style={{ width: "100%", maxWidth: 600 }}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
+            <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
               MARKET VALUE ANALYSIS
             </div>
-            <h1 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+            <h1 style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
               あなたのIT経験を教えてください
             </h1>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -50,14 +50,13 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 padding: "32px 24px",
                 cursor: "pointer",
                 textAlign: "center",
-                border: "1px solid var(--border)",
-                background: "var(--surface)",
+                background: "linear-gradient(135deg, #ffffff 0%, #f0fff8 100%)",
                 color: "inherit",
                 fontFamily: "inherit",
               }}
             >
               <div style={{ fontSize: 40, marginBottom: 16 }}>🌱</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>
                 IT未経験
               </div>
               <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
@@ -68,9 +67,9 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 marginTop: 20,
                 display: "inline-block",
                 padding: "8px 18px", borderRadius: 8,
-                background: "rgba(63,185,80,0.12)",
-                border: "1px solid rgba(63,185,80,0.3)",
-                fontSize: 12, color: "#3fb950",
+                background: "rgba(16,185,129,0.1)",
+                border: "1px solid rgba(16,185,129,0.3)",
+                fontSize: 12, color: "#059669",
                 fontFamily: "'Space Mono', monospace",
               }}>
                 入社想定年収 + 次のステップ
@@ -84,14 +83,13 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 padding: "32px 24px",
                 cursor: "pointer",
                 textAlign: "center",
-                border: "1px solid var(--border)",
-                background: "var(--surface)",
+                background: "linear-gradient(135deg, #ffffff 0%, #f5f0ff 100%)",
                 color: "inherit",
                 fontFamily: "inherit",
               }}
             >
               <div style={{ fontSize: 40, marginBottom: 16 }}>⚡</div>
-              <div style={{ fontSize: 18, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>
                 IT経験者
               </div>
               <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6 }}>
@@ -102,9 +100,9 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 marginTop: 20,
                 display: "inline-block",
                 padding: "8px 18px", borderRadius: 8,
-                background: "rgba(139,92,246,0.12)",
-                border: "1px solid rgba(139,92,246,0.3)",
-                fontSize: 12, color: "#c4b5fd",
+                background: "rgba(99,102,241,0.08)",
+                border: "1px solid rgba(99,102,241,0.25)",
+                fontSize: 12, color: "#6366f1",
                 fontFamily: "'Space Mono', monospace",
               }}>
                 転職市場での年収レンジを算出
@@ -207,15 +205,15 @@ export default function MarketValuePage() {
   if (beginnerMode) {
     return (
       <main style={{ minHeight: "100vh", background: "var(--bg)" }} className="grid-bg">
-        <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16, background: "var(--surface)" }}>
           <Link href="/" style={{ color: "var(--muted)", fontSize: 13, textDecoration: "none", fontFamily: "'Space Mono', monospace" }}>
             ← ホーム
           </Link>
           <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           <span style={{
             padding: "3px 10px", borderRadius: 20, fontSize: 11,
-            background: "rgba(63,185,80,0.12)", border: "1px solid rgba(63,185,80,0.3)",
-            color: "#3fb950", fontFamily: "'Space Mono', monospace",
+            background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)",
+            color: "#059669", fontFamily: "'Space Mono', monospace",
           }}>
             未経験モード
           </span>
@@ -258,7 +256,7 @@ export default function MarketValuePage() {
                       display: "flex", justifyContent: "space-between", alignItems: "center",
                     }}
                   >
-                    <span style={{ color: beginnerRoleId === role.id ? "#93c5fd" : "var(--text)", fontWeight: beginnerRoleId === role.id ? 700 : 400 }}>
+                    <span style={{ color: beginnerRoleId === role.id ? "#6366f1" : "var(--text)", fontWeight: beginnerRoleId === role.id ? 700 : 400 }}>
                       {role.label}
                     </span>
                     <span style={{ fontSize: 12, color: "var(--muted)" }}>{role.description}</span>
@@ -271,7 +269,7 @@ export default function MarketValuePage() {
             <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.1s" }}>
               <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
                 <span>02 / ITの学習期間</span>
-                <span style={{ color: "var(--blue)", fontSize: 18, fontWeight: 700 }}>
+                <span style={{ color: "#6366f1", fontSize: 18, fontWeight: 700 }}>
                   {studyMonths === 0 ? "まだ始めてない" : `${studyMonths} ヶ月`}
                 </span>
               </label>
@@ -296,7 +294,7 @@ export default function MarketValuePage() {
                 <label style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
                   03 / 習得済み・勉強中のスキル
                 </label>
-                <span style={{ fontSize: 12, color: "var(--blue)", fontFamily: "'Space Mono', monospace" }}>
+                <span style={{ fontSize: 12, color: "#6366f1", fontFamily: "'Space Mono', monospace" }}>
                   {beginnerSkills.size} 選択中
                 </span>
               </div>
@@ -320,7 +318,7 @@ export default function MarketValuePage() {
                             borderRadius: 20,
                             border: beginnerSkills.has(skill.id) ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
                             background: beginnerSkills.has(skill.id) ? "rgba(59,130,246,0.12)" : "var(--surface-2)",
-                            color: beginnerSkills.has(skill.id) ? "#93c5fd" : "var(--muted)",
+                            color: beginnerSkills.has(skill.id) ? "#4f46e5" : "var(--muted)",
                             fontSize: 13, cursor: "pointer",
                             transition: "all 0.15s", fontFamily: "inherit",
                             transform: beginnerSkills.has(skill.id) ? "scale(1.03)" : "scale(1)",
@@ -384,7 +382,7 @@ export default function MarketValuePage() {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)" }} className="grid-bg">
       {/* Nav */}
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16, background: "var(--surface)" }}>
         <Link href="/" style={{ color: "var(--muted)", fontSize: 13, textDecoration: "none", fontFamily: "'Space Mono', monospace" }}>
           ← ホーム
         </Link>
@@ -399,7 +397,7 @@ export default function MarketValuePage() {
           <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
             MARKET VALUE ANALYSIS
           </div>
-          <h1 style={{ fontSize: 28, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+          <h1 style={{ fontSize: 28, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
             あなたの市場価値を診断
           </h1>
           <p style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -425,7 +423,7 @@ export default function MarketValuePage() {
                     borderRadius: 8,
                     border: roleId === role.id ? "1px solid var(--blue)" : "1px solid var(--border)",
                     background: roleId === role.id ? "rgba(59,130,246,0.1)" : "transparent",
-                    color: roleId === role.id ? "#93c5fd" : "var(--muted)",
+                    color: roleId === role.id ? "#6366f1" : "var(--muted)",
                     fontSize: 13, cursor: "pointer", textAlign: "left",
                     transition: "all 0.15s", fontFamily: "inherit",
                   }}
@@ -440,7 +438,7 @@ export default function MarketValuePage() {
           <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.1s" }}>
             <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
               <span>02 / 経験年数</span>
-              <span style={{ color: "var(--blue)", fontSize: 18, fontWeight: 700 }}>{years} 年</span>
+              <span style={{ color: "#6366f1", fontSize: 18, fontWeight: 700 }}>{years} 年</span>
             </label>
             <input
               type="range"
@@ -484,7 +482,7 @@ export default function MarketValuePage() {
                           borderRadius: 20,
                           border: skills.has(skill.id) ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
                           background: skills.has(skill.id) ? "rgba(59,130,246,0.12)" : "var(--surface-2)",
-                          color: skills.has(skill.id) ? "#93c5fd" : "var(--muted)",
+                          color: skills.has(skill.id) ? "#4f46e5" : "var(--muted)",
                           fontSize: 13, cursor: "pointer",
                           transition: "all 0.15s", fontFamily: "inherit",
                           transform: skills.has(skill.id) ? "scale(1.03)" : "scale(1)",
@@ -592,7 +590,7 @@ function BeginnerResultView({
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)" }} className="grid-bg">
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", gap: 16 }}>
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", gap: 16, background: "var(--surface)" }}>
         <button onClick={onRetry} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Mono', monospace" }}>
           ← 再入力
         </button>
@@ -604,14 +602,14 @@ function BeginnerResultView({
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
 
         <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
+          <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
             BEGINNER MARKET VALUE RESULT
           </div>
           <span style={{
             display: "inline-block",
-            padding: "4px 12px", borderRadius: 20, fontSize: 11,
-            background: "rgba(63,185,80,0.12)", border: "1px solid rgba(63,185,80,0.3)",
-            color: "#3fb950", fontFamily: "'Space Mono', monospace",
+            padding: "4px 14px", borderRadius: 20, fontSize: 11,
+            background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)",
+            color: "#059669", fontFamily: "'Space Mono', monospace",
           }}>
             未経験入社の場合の目安年収
           </span>
@@ -622,15 +620,16 @@ function BeginnerResultView({
           className="card animate-fade-scale"
           style={{
             padding: "36px 32px", marginBottom: 20, marginTop: 20,
-            background: "linear-gradient(135deg, #0f1a12 0%, #0d1a24 100%)",
-            border: "1px solid rgba(63,185,80,0.3)",
+            background: "linear-gradient(135deg, #f0fff8 0%, #f0f8ff 100%)",
+            border: "1px solid rgba(16,185,129,0.2)",
             position: "relative", overflow: "hidden",
+            boxShadow: "0 4px 24px rgba(16,185,129,0.1)",
           }}
         >
           <div style={{
             position: "absolute", top: 0, right: 0,
             width: 300, height: 300,
-            background: "radial-gradient(circle at top right, rgba(63,185,80,0.08) 0%, transparent 60%)",
+            background: "radial-gradient(circle at top right, rgba(16,185,129,0.08) 0%, transparent 60%)",
           }} />
 
           <div style={{ position: "relative" }}>
@@ -642,7 +641,7 @@ function BeginnerResultView({
                 <span style={{ fontSize: 11, color: "var(--muted)" }}>入社想定年収レンジ</span>
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span className="font-hero" style={{ fontSize: 42, fontWeight: 900, color: "#fff", lineHeight: 1 }}>
+                <span className="font-hero" style={{ fontSize: 42, fontWeight: 900, color: "var(--text)", lineHeight: 1 }}>
                   <AnimatedNumber target={result.salaryMin} />
                   <span style={{ fontSize: 20 }}>〜</span>
                   <AnimatedNumber target={result.salaryMax} />
@@ -652,12 +651,12 @@ function BeginnerResultView({
             </div>
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <div style={{ padding: "8px 14px", borderRadius: 8, background: "rgba(63,185,80,0.1)", border: "1px solid rgba(63,185,80,0.3)" }}>
-                <span style={{ fontSize: 12, color: "#3fb950", fontFamily: "'Space Mono', monospace" }}>
+              <div style={{ padding: "8px 14px", borderRadius: 8, background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)" }}>
+                <span style={{ fontSize: 12, color: "#059669", fontFamily: "'Space Mono', monospace" }}>
                   中央値: {Math.round((result.salaryMin + result.salaryMax) / 2)}万円
                 </span>
               </div>
-              <div style={{ padding: "8px 14px", borderRadius: 8, background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)" }}>
+              <div style={{ padding: "8px 14px", borderRadius: 8, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
                 <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>
                   ※ 実際の年収は企業・地域により異なります
                 </span>
@@ -668,7 +667,7 @@ function BeginnerResultView({
 
         {/* Next steps */}
         <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 20, animationDelay: "0.15s" }}>
-          <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
+          <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
             NEXT STEPS — 転職に向けてやること
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -677,7 +676,7 @@ function BeginnerResultView({
                 key={step}
                 style={{
                   display: "flex", gap: 14, alignItems: "flex-start", padding: "14px 16px",
-                  borderRadius: 8, background: "rgba(0,0,0,0.2)", border: "1px solid var(--border)",
+                  borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)",
                   opacity: showSteps ? 1 : 0,
                   transform: showSteps ? "translateX(0)" : "translateX(-12px)",
                   transition: `opacity 0.4s ${i * 0.12}s, transform 0.4s ${i * 0.12}s`,
@@ -685,9 +684,9 @@ function BeginnerResultView({
               >
                 <div style={{
                   width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-                  background: "rgba(63,185,80,0.15)", border: "1px solid rgba(63,185,80,0.3)",
+                  background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.25)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 12, color: "#3fb950", fontFamily: "'Space Mono', monospace", fontWeight: 700,
+                  fontSize: 12, color: "#059669", fontFamily: "'Space Mono', monospace", fontWeight: 700,
                 }}>
                   {i + 1}
                 </div>
@@ -701,7 +700,7 @@ function BeginnerResultView({
         {result.keywords.length > 0 && (
           <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.25s" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+              <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
                 RESUME KEYWORDS — アピールに使えるキーワード
               </div>
             </div>
@@ -733,7 +732,7 @@ function BeginnerResultView({
             style={{
               padding: "12px 24px", borderRadius: 10, border: "1px solid var(--border)",
               background: "var(--surface)", color: "var(--text)", fontSize: 14, cursor: "pointer",
-              fontFamily: "inherit",
+              fontFamily: "inherit", boxShadow: "0 1px 4px rgba(14,18,64,0.05)",
             }}
           >
             条件を変えて再計算
@@ -742,8 +741,10 @@ function BeginnerResultView({
             href="/diagnosis"
             style={{
               padding: "12px 24px", borderRadius: 10,
-              background: "var(--blue)", color: "#fff", fontSize: 14, fontWeight: 700,
+              background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              color: "#fff", fontSize: 14, fontWeight: 700,
               textDecoration: "none", display: "inline-block",
+              boxShadow: "0 4px 16px rgba(99,102,241,0.3)",
             }}
           >
             IT職種診断も試す →
@@ -776,14 +777,14 @@ function ResultView({
   }, []);
 
   const deviationColor =
-    result.deviation >= 65 ? "#3fb950" :
-    result.deviation >= 55 ? "#3b82f6" :
-    "#e3b341";
+    result.deviation >= 65 ? "#10b981" :
+    result.deviation >= 55 ? "#6366f1" :
+    "#f59e0b";
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)" }} className="grid-bg">
       {/* Nav */}
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", gap: 16 }}>
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", gap: 16, background: "var(--surface)" }}>
         <button onClick={onRetry} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Mono', monospace" }}>
           ← 再入力
         </button>
@@ -795,7 +796,7 @@ function ResultView({
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
 
         <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2 }}>
+          <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2 }}>
             MARKET VALUE RESULT
           </div>
         </div>
@@ -805,15 +806,16 @@ function ResultView({
           className="card animate-fade-scale"
           style={{
             padding: "36px 32px", marginBottom: 20, marginTop: 20,
-            background: "linear-gradient(135deg, #161b22 0%, #1a1f2e 100%)",
-            border: "1px solid rgba(59,130,246,0.3)",
+            background: "linear-gradient(135deg, #f0f2ff 0%, #f8f0ff 100%)",
+            border: "1px solid rgba(99,102,241,0.2)",
             position: "relative", overflow: "hidden",
+            boxShadow: "0 4px 24px rgba(99,102,241,0.1)",
           }}
         >
           <div style={{
             position: "absolute", top: 0, right: 0,
             width: 300, height: 300,
-            background: "radial-gradient(circle at top right, rgba(59,130,246,0.08) 0%, transparent 60%)",
+            background: "radial-gradient(circle at top right, rgba(139,92,246,0.08) 0%, transparent 60%)",
           }} />
 
           <div style={{ position: "relative" }}>
@@ -826,7 +828,7 @@ function ResultView({
                   <span style={{ fontSize: 11, color: "var(--muted)" }}>想定年収レンジ</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                  <span className="font-hero" style={{ fontSize: 42, fontWeight: 900, color: "#fff", lineHeight: 1 }}>
+                  <span className="font-hero" style={{ fontSize: 42, fontWeight: 900, color: "var(--text)", lineHeight: 1 }}>
                     <AnimatedNumber target={result.salaryMin} />
                     <span style={{ fontSize: 20 }}>〜</span>
                     <AnimatedNumber target={result.salaryMax} />
@@ -840,11 +842,11 @@ function ResultView({
                 borderRadius: "50%",
                 border: `3px solid ${deviationColor}`,
                 display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                background: `${deviationColor}10`,
+                background: `${deviationColor}18`,
                 flexShrink: 0,
-                boxShadow: `0 0 20px ${deviationColor}30`,
+                boxShadow: `0 4px 20px ${deviationColor}30`,
               }}>
-                <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>偏差値</div>
+                <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>偏差値</div>
                 <div style={{ fontSize: 28, fontWeight: 900, color: deviationColor, fontFamily: "'Orbitron', sans-serif" }}>
                   <AnimatedNumber target={result.deviation} />
                 </div>
@@ -862,7 +864,7 @@ function ResultView({
                 <div style={{
                   position: "absolute", top: 0, left: 0,
                   height: "100%", borderRadius: 5,
-                  background: "linear-gradient(90deg, var(--blue), var(--purple))",
+                  background: "linear-gradient(90deg, #6366f1, #8b5cf6)",
                   width: showBars ? "100%" : "0%",
                   transition: "width 1.4s cubic-bezier(0.4,0,0.2,1)",
                 }} />
@@ -870,13 +872,13 @@ function ResultView({
             </div>
 
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <div style={{ padding: "8px 16px", borderRadius: 8, background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.3)" }}>
-                <span style={{ fontSize: 12, color: "#93c5fd", fontFamily: "'Space Mono', monospace" }}>
+              <div style={{ padding: "8px 16px", borderRadius: 8, background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)" }}>
+                <span style={{ fontSize: 12, color: "#6366f1", fontFamily: "'Space Mono', monospace" }}>
                   中央値: {Math.round((result.salaryMin + result.salaryMax) / 2)}万円
                 </span>
               </div>
-              <div style={{ padding: "8px 16px", borderRadius: 8, background: "rgba(63,185,80,0.1)", border: "1px solid rgba(63,185,80,0.3)" }}>
-                <span style={{ fontSize: 12, color: "#3fb950", fontFamily: "'Space Mono', monospace" }}>
+              <div style={{ padding: "8px 16px", borderRadius: 8, background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
+                <span style={{ fontSize: 12, color: "#059669", fontFamily: "'Space Mono', monospace" }}>
                   市場平均比 +{Math.round(((result.salaryMin + result.salaryMax) / 2 / 600 - 1) * 100)}%
                 </span>
               </div>
@@ -886,7 +888,7 @@ function ResultView({
 
         {/* Target roles */}
         <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 20, animationDelay: "0.15s" }}>
-          <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
+          <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
             TARGET ROLES
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -895,19 +897,19 @@ function ResultView({
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
                   <div style={{
                     width: 24, height: 24, borderRadius: 6,
-                    background: i === 0 ? "rgba(59,130,246,0.2)" : "rgba(139,92,246,0.1)",
-                    border: `1px solid ${i === 0 ? "rgba(59,130,246,0.4)" : "rgba(139,92,246,0.2)"}`,
+                    background: i === 0 ? "rgba(99,102,241,0.15)" : "var(--surface-2)",
+                    border: `1px solid ${i === 0 ? "rgba(99,102,241,0.35)" : "var(--border)"}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 10, color: i === 0 ? "#93c5fd" : "var(--muted)",
+                    fontSize: 10, color: i === 0 ? "#6366f1" : "var(--muted)",
                     fontFamily: "'Space Mono', monospace", fontWeight: 700,
                     flexShrink: 0,
                   }}>
                     {i + 1}
                   </div>
-                  <span style={{ flex: 1, fontSize: 14, color: i === 0 ? "#fff" : "var(--text)", fontWeight: i === 0 ? 700 : 400 }}>
+                  <span style={{ flex: 1, fontSize: 14, color: "var(--text)", fontWeight: i === 0 ? 700 : 400 }}>
                     {role.label}
                   </span>
-                  <span className="font-mono-display" style={{ fontSize: 12, color: i === 0 ? "var(--blue)" : "var(--muted)" }}>
+                  <span className="font-mono-display" style={{ fontSize: 12, color: i === 0 ? "#6366f1" : "var(--muted)" }}>
                     {matchPercent}%
                   </span>
                 </div>
@@ -917,7 +919,7 @@ function ResultView({
                     style={{
                       width: showBars ? `${matchPercent}%` : "0%",
                       background: i === 0
-                        ? "linear-gradient(90deg, var(--blue), var(--purple))"
+                        ? "linear-gradient(90deg, #6366f1, #8b5cf6)"
                         : "var(--border-bright)",
                       transition: `width 1.2s cubic-bezier(0.4,0,0.2,1) ${i * 0.1}s`,
                     }}
@@ -931,10 +933,10 @@ function ResultView({
         {/* Keywords */}
         <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.25s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-            <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+            <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
               RESUME KEYWORDS
             </div>
-            <span style={{ fontSize: 12, color: "var(--blue)", fontFamily: "'Space Mono', monospace" }}>
+            <span style={{ fontSize: 12, color: "#6366f1", fontFamily: "'Space Mono', monospace" }}>
               {result.keywords.length} キーワード
             </span>
           </div>
@@ -971,7 +973,7 @@ function ResultView({
             style={{
               padding: "12px 24px", borderRadius: 10, border: "1px solid var(--border)",
               background: "var(--surface)", color: "var(--text)", fontSize: 14, cursor: "pointer",
-              fontFamily: "inherit",
+              fontFamily: "inherit", boxShadow: "0 1px 4px rgba(14,18,64,0.05)",
             }}
           >
             条件を変えて再計算
@@ -980,8 +982,10 @@ function ResultView({
             href="/diagnosis"
             style={{
               padding: "12px 24px", borderRadius: 10,
-              background: "var(--blue)", color: "#fff", fontSize: 14, fontWeight: 700,
+              background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              color: "#fff", fontSize: 14, fontWeight: 700,
               textDecoration: "none", display: "inline-block",
+              boxShadow: "0 4px 16px rgba(99,102,241,0.3)",
             }}
           >
             IT職種診断も試す →

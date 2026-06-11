@@ -64,3 +64,65 @@ Vercelへのデプロイはトークン方式（`vercel.md` 参照）。
 - `lib/diagnosis.ts` はクライアントバンドルに含まれる → 型とJOB_TYPESのみ
 - `lib/diagnosis-questions.ts` はAPIルート経由のみ（サーバー専用）→ 質問・スコアロジック全て
 - 市場価値チェックはAPIルートなし（クライアント側で計算）
+
+## インストール済みパッケージ
+
+### デザイン
+| パッケージ | 用途 |
+|---|---|
+| shadcn/ui | コンポーネントライブラリ（Tailwind v4対応・初期化済み） |
+| lucide-react | アイコン |
+| framer-motion | アニメーション |
+| clsx | クラス名結合ユーティリティ |
+| tailwind-merge | Tailwindクラスの競合解決 |
+| class-variance-authority | コンポーネントのバリアント管理 |
+
+### shadcn コンポーネント（`components/ui/` に生成済み）
+button / card / badge / progress / dialog / sheet / separator / input / label / tabs / sonner
+
+### 集客・計測
+| パッケージ | 用途 |
+|---|---|
+| @vercel/analytics | ページビュー計測（layout.tsx に組み込み済み） |
+| @vercel/speed-insights | Core Web Vitals 計測（layout.tsx に組み込み済み） |
+| next-sitemap | ビルド時にsitemap.xml自動生成（`postbuild` に設定済み） |
+
+### マネタイズ・決済
+| パッケージ | 用途 |
+|---|---|
+| stripe | 決済サーバーSDK |
+| @stripe/stripe-js | 決済クライアントSDK |
+| @stripe/react-stripe-js | React用Stripeコンポーネント |
+| @supabase/supabase-js | Webhook後のis_premium更新に使用 |
+
+### フォーム・バリデーション
+| パッケージ | 用途 |
+|---|---|
+| zod | スキーマバリデーション |
+| react-hook-form | フォーム状態管理 |
+| @hookform/resolvers | zod ↔ react-hook-form 連携 |
+
+## 決済フロー（ai-sermon-webから移植）
+
+```
+ページ上のボタン
+  → POST /api/checkout  { email }
+  → Stripe Checkout URL にリダイレクト
+  → 決済完了 → /success
+  → POST /api/webhook  (Stripe → サーバー)
+  → profiles.is_premium = true  (Supabase service role key で更新)
+キャンセル → /cancel
+```
+
+## 環境変数（`.env.local.example` 参照）
+
+```
+STRIPE_SECRET_KEY
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+STRIPE_PRICE_ID
+STRIPE_WEBHOOK_SECRET
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+NEXT_PUBLIC_URL
+SITE_URL
+```
