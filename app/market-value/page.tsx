@@ -131,10 +131,17 @@ export default function MarketValuePage() {
   const [beginnerSkills, setBeginnerSkills] = useState<Set<BeginnerSkillId>>(new Set());
   const [prevSalary, setPrevSalary] = useState<number | "">("");
   const [beginnerResult, setBeginnerResult] = useState<BeginnerMarketValueResult | null>(null);
-  const [beginnerQualification, setBeginnerQualification] = useState<string>("");
-
-  // 経験者の保有資格（複数選択）
+  const [beginnerQualifications, setBeginnerQualifications] = useState<Set<string>>(new Set());
   const [qualifications, setQualifications] = useState<Set<string>>(new Set());
+
+  function toggleBeginnerQualification(id: string) {
+    setBeginnerQualifications((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   function toggleQualification(id: string) {
     setQualifications((prev) => {
@@ -345,34 +352,37 @@ export default function MarketValuePage() {
 
             {/* Beginner Qualification */}
             <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.2s" }}>
-              <label style={{ display: "block", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
-                04 / 勉強中・取得済みの資格・スキル
-              </label>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <label style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+                  04 / 勉強中・取得済みのIT資格（複数選択可）
+                </label>
+                <span style={{ fontSize: 12, color: "#6366f1", fontFamily: "'Space Mono', monospace" }}>
+                  {beginnerQualifications.size} 選択中
+                </span>
+              </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {[
                   { id: "ip", label: "ITパスポート（IP）を勉強中または取得済み" },
                   { id: "fe", label: "基本情報技術者試験（FE）を勉強中または取得済み" },
                   { id: "ap", label: "応用情報技術者試験（AP）または高度情報処理を勉強中・取得済み" },
                   { id: "sg", label: "情報セキュリティマネジメント試験（SG）を勉強中または取得済み" },
-                  { id: "programming", label: "プログラミング（HTML・JavaScript・Python 等）を独学中" },
-                  { id: "none", label: "まだIT関連の勉強は始めていない" },
                 ].map((q) => (
                   <button
                     key={q.id}
                     type="button"
-                    onClick={() => setBeginnerQualification(beginnerQualification === q.id ? "" : q.id)}
+                    onClick={() => toggleBeginnerQualification(q.id)}
                     style={{
                       padding: "10px 16px",
                       borderRadius: 8,
-                      border: beginnerQualification === q.id ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
-                      background: beginnerQualification === q.id ? "rgba(59,130,246,0.1)" : "var(--surface-2)",
-                      color: beginnerQualification === q.id ? "#4f46e5" : "var(--muted)",
+                      border: beginnerQualifications.has(q.id) ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
+                      background: beginnerQualifications.has(q.id) ? "rgba(59,130,246,0.12)" : "var(--surface-2)",
+                      color: beginnerQualifications.has(q.id) ? "#4f46e5" : "var(--muted)",
                       fontSize: 13, cursor: "pointer", textAlign: "left",
                       transition: "all 0.15s", fontFamily: "inherit",
                       display: "flex", alignItems: "center", gap: 8,
                     }}
                   >
-                    {beginnerQualification === q.id && <span>✓</span>}
+                    {beginnerQualifications.has(q.id) && <span>✓</span>}
                     {q.label}
                   </button>
                 ))}
