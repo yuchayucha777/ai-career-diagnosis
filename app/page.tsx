@@ -203,9 +203,6 @@ export default function HomePage() {
         </div>
 
         <nav style={{ display: "flex", alignItems: "center", gap: 26, fontSize: 15, fontWeight: 500 }}>
-          <Link href="/diagnosis" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            職種診断
-          </Link>
           <Link href="/types" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
             職種図鑑
           </Link>

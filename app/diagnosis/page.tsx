@@ -462,8 +462,8 @@ function ResultView({
 
         {/* ヘッダー */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
-          <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 10 }}>
-            DIAGNOSIS RESULT
+          <div style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 10, fontWeight: 600 }}>
+            診断結果
           </div>
           {isBeginner ? (
             <span style={{
@@ -779,7 +779,7 @@ function ResultView({
               boxShadow: "0 14px 32px -16px #6366f1",
             }}
           >
-            <span>市場価値チェックへ進む</span>
+            <span>市場価値を調べる</span>
             <span style={{ fontSize: 18 }}>→</span>
           </Link>
           <Link
@@ -793,7 +793,7 @@ function ResultView({
               textDecoration: "none",
             }}
           >
-            <span>IT職種図鑑で全14タイプを見る</span>
+            <span>職種図鑑を見る</span>
             <span style={{ color: "#6366f1", fontSize: 18 }}>→</span>
           </Link>
         </div>
