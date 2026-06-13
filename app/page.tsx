@@ -204,10 +204,10 @@ export default function HomePage() {
 
         <nav style={{ display: "flex", alignItems: "center", gap: 26, fontSize: 15, fontWeight: 500 }}>
           <Link href="/types" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            職種図鑑
+            職種図鑑を見る
           </Link>
           <Link href="/market-value" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            市場価値
+            市場価値を調べる
           </Link>
           <Link
             href="/diagnosis"
