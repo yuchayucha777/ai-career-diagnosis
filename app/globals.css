@@ -179,6 +179,52 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
+/* Homepage */
+@keyframes ping {
+  0%   { box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(99,102,241,0); }
+  100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+}
+.ping-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #6366f1;
+  animation: ping 1.8s infinite;
+  display: inline-block;
+}
+.home-cards { grid-template-columns: 1fr 1fr; }
+.nav-link-hover:hover { color: var(--text) !important; }
+@media (max-width: 760px) {
+  .home-cards { grid-template-columns: 1fr; }
+}
+
+/* IT職種図鑑 */
+@keyframes zukanPop {
+  from { transform: translateY(14px) scale(0.97); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+@keyframes modalRise {
+  from { transform: translateY(24px) scale(0.97); }
+  to   { transform: none; }
+}
+.zcard-anim { animation: zukanPop 0.4s cubic-bezier(0.3,0.7,0.4,1) both; }
+.zukan-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+.cat-pill-hover:hover { transform: translateY(-2px) !important; }
+.modal-close-btn:hover { transform: rotate(90deg) !important; }
+.modal-grid-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+@media (max-width: 1080px) { .zukan-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px)  { .zukan-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .modal-grid-layout { grid-template-columns: 1fr; }
+}
+
 .option-btn {
   background: var(--surface);
   border: 1px solid var(--border);

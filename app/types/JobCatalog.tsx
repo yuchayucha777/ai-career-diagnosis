@@ -1,93 +1,113 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
-import { CATEGORIES, JOBS, type CategoryKey } from "@/data/jobs";
+import { useMemo, useState } from "react";
+import { CATS, JOBS, type CategoryKey, type Job } from "@/data/jobs";
 import JobCard from "./JobCard";
+import DetailModal from "./DetailModal";
 
 type FilterKey = "all" | CategoryKey;
 
-const FILTERS: { key: FilterKey; label: string; emoji: string }[] = [
-  { key: "all", label: "すべて", emoji: "✦" },
-  ...Object.values(CATEGORIES).map((c) => ({ key: c.key, label: c.label, emoji: c.emoji })),
-];
-
 export default function JobCatalog() {
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [modalJob, setModalJob] = useState<Job | null>(null);
 
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: JOBS.length };
-    JOBS.forEach((j) => (c[j.cat] = (c[j.cat] ?? 0) + 1));
-    return c;
+    const m: Record<string, number> = { all: JOBS.length };
+    (Object.keys(CATS) as CategoryKey[]).forEach((k) => {
+      m[k] = JOBS.filter((j) => j.cat === k).length;
+    });
+    return m;
   }, []);
 
-  const list = useMemo(
+  const filtered = useMemo(
     () => (filter === "all" ? JOBS : JOBS.filter((j) => j.cat === filter)),
     [filter],
   );
 
-  const activeCat = filter !== "all" ? CATEGORIES[filter] : null;
-
   return (
     <>
-      {/* sticky filter tabs */}
-      <div
-        style={{
-          position: "sticky", top: 60, zIndex: 40, width: "100%",
-          padding: "14px 0",
-          background: "linear-gradient(var(--bg), var(--bg) 70%, transparent)",
-        }}
-      >
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
-          {FILTERS.map((f) => {
-            const c = f.key !== "all" ? CATEGORIES[f.key] : null;
-            const active = filter === f.key;
-            const vars = {
-              "--ac1": c?.c1 ?? "#3b82f6",
-              "--ac2": c?.c2 ?? "#8b5cf6",
-            } as CSSProperties;
-            return (
-              <button
-                key={f.key}
-                type="button"
-                style={active ? { ...vars, backgroundImage: "linear-gradient(135deg, var(--ac1), var(--ac2))" } : vars}
-                onClick={() => setFilter(f.key)}
-                className={`inline-flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-[13px] font-medium transition-all duration-200 ${
-                  active
-                    ? "border border-transparent text-white shadow-[0_8px_22px_-10px_var(--ac2)]"
-                    : "border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:-translate-y-px hover:border-[#4b5563] hover:text-[var(--text)]"
-                }`}
-              >
-                <span className={active ? "" : "grayscale-[0.3]"}>{f.emoji}</span>
-                {f.label}
-                <span className={`font-mono text-[11px] ${active ? "text-white/85" : "text-[var(--muted)]/80"}`}>
-                  {counts[f.key] ?? 0}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+      {/* category filter */}
+      <div style={{
+        display: "flex", flexWrap: "wrap", justifyContent: "center",
+        gap: 10, margin: "30px auto 0",
+      }}>
+        {/* all */}
+        <CatPill
+          active={filter === "all"}
+          color="#6366f1"
+          label="すべて"
+          count={counts.all}
+          onClick={() => setFilter("all")}
+        />
+        {(Object.entries(CATS) as [CategoryKey, typeof CATS[CategoryKey]][]).map(([k, v]) => (
+          <CatPill
+            key={k}
+            active={filter === k}
+            color={v.color}
+            label={v.label}
+            count={counts[k]}
+            onClick={() => setFilter(k)}
+          />
+        ))}
       </div>
 
       {/* card grid */}
-      <main style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(272px, 1fr))", gap: 20, paddingTop: 18, paddingBottom: 90 }}>
-          {list.map((job, i) => (
-            <JobCard key={job.id} job={job} index={i} />
-          ))}
-          {list.length === 0 && (
-            <p className="col-span-full py-16 text-center font-mono text-[var(--muted)]">// no jobs found</p>
-          )}
-        </div>
+      <main className="zukan-grid" key={filter}>
+        {filtered.map((job, i) => (
+          <JobCard key={job.id} job={job} index={i} onOpen={setModalJob} />
+        ))}
       </main>
 
-      <footer style={{ borderTop: "1px solid var(--border)", padding: "30px 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, fontSize: 12, color: "var(--muted)" }}>
-          <span>© 2026 IT Career Lab</span>
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11 }}>
-            /types · {list.length} of {JOBS.length} jobs{activeCat ? ` · ${activeCat.label}` : ""}
-          </span>
-        </div>
-      </footer>
+      <p style={{ marginTop: 34, textAlign: "center", fontSize: 12, color: "var(--muted)", opacity: 0.8 }}>
+        ※ 想定年収は日本国内の公開求人・統計をもとにした推計です。実際の金額を保証するものではありません。
+      </p>
+
+      {modalJob && (
+        <DetailModal
+          job={modalJob}
+          onClose={() => setModalJob(null)}
+          onNav={setModalJob}
+        />
+      )}
     </>
+  );
+}
+
+function CatPill({
+  active, color, label, count, onClick,
+}: {
+  active: boolean; color: string; label: string; count: number; onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "9px 16px",
+        border: `1.5px solid ${active ? color : "rgba(99,102,241,0.18)"}`,
+        borderRadius: 999,
+        background: active ? color : "#fff",
+        color: active ? "#fff" : "var(--muted)",
+        fontSize: 13.5, fontWeight: 700,
+        cursor: "pointer",
+        transition: "transform 0.12s, background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s",
+        boxShadow: active ? `0 10px 22px -12px ${color}` : "none",
+        transform: active ? "none" : undefined,
+        fontFamily: "inherit",
+      }}
+      className={active ? "" : "cat-pill-hover"}
+    >
+      {label}
+      <span style={{
+        display: "inline-grid", placeItems: "center",
+        minWidth: 20, height: 20, padding: "0 5px",
+        borderRadius: 999,
+        background: active ? "rgba(255,255,255,0.25)" : color + "18",
+        color: active ? "#fff" : color,
+        fontSize: 11.5, fontWeight: 900,
+      }}>
+        {count}
+      </span>
+    </button>
   );
 }

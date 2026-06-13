@@ -1,407 +1,345 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import AdBanner from "@/components/AdBanner";
+import { useState, useEffect } from "react";
 
-const TYPEWRITER_SAMPLES = [
-  "Webエンジニア",
-  "AIエンジニア",
-  "データサイエンティスト",
-  "クラウドエンジニア",
-  "セキュリティエンジニア",
-  "プロジェクトマネージャー",
-  "ITコンサルタント",
-  "プログラマー",
-];
-
-function TypewriterText() {
-  const [index, setIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+function useCountUp(target: number, run: boolean, dur = 1100) {
+  const [v, setV] = useState(0);
   useEffect(() => {
-    const current = TYPEWRITER_SAMPLES[index];
+    if (!run) return;
+    const start = performance.now();
+    const id = setInterval(() => {
+      const p = Math.min(1, (performance.now() - start) / dur);
+      setV(target * (1 - Math.pow(1 - p, 3)));
+      if (p >= 1) clearInterval(id);
+    }, 16);
+    return () => clearInterval(id);
+  }, [target, run, dur]);
+  return v;
+}
 
-    if (!deleting && displayed.length < current.length) {
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(current.slice(0, displayed.length + 1));
-      }, 80);
-    } else if (!deleting && displayed.length === current.length) {
-      timeoutRef.current = setTimeout(() => setDeleting(true), 1800);
-    } else if (deleting && displayed.length > 0) {
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed(current.slice(0, displayed.length - 1));
-      }, 40);
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setIndex((i) => (i + 1) % TYPEWRITER_SAMPLES.length);
-    }
-
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
-  }, [displayed, deleting, index]);
-
+function CompassMark({ size = 30 }: { size?: number }) {
   return (
-    <span style={{ color: "#3b82f6", fontFamily: "'Space Mono', monospace" }}>
-      {displayed}
-      <span className="cursor-blink" />
-    </span>
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="2.2" />
+      <path d="M16 9.5 18.6 16 16 22.5 13.4 16Z" fill="currentColor" />
+      <circle cx="16" cy="16" r="1.8" fill="#fff" />
+    </svg>
   );
 }
 
-function AnimatedSalary() {
-  const [value, setValue] = useState(400);
-  const targets = [480, 620, 850, 1100, 780, 650];
-  const [tIdx, setTIdx] = useState(0);
-
-  useEffect(() => {
-    const target = targets[tIdx];
-    if (value === target) {
-      const timer = setTimeout(() => {
-        setTIdx((i) => (i + 1) % targets.length);
-      }, 1200);
-      return () => clearTimeout(timer);
-    }
-    const step = value < target ? Math.ceil((target - value) / 8) : -Math.ceil((value - target) / 8);
-    const timer = setTimeout(() => setValue((v) => {
-      const next = v + step;
-      if (step > 0) return Math.min(next, target);
-      return Math.max(next, target);
-    }), 30);
-    return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, tIdx]);
-
+function ChartMark({ size = 30 }: { size?: number }) {
   return (
-    <span style={{ color: "#8b5cf6", fontFamily: "'Orbitron', sans-serif", fontSize: "2rem", fontWeight: 900 }}>
-      {value}<span style={{ fontSize: "1rem", color: "#7d8590" }}>万円〜</span>
-    </span>
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <rect x="5" y="17" width="5.4" height="10" rx="1.4" fill="currentColor" />
+      <rect x="13.3" y="11" width="5.4" height="16" rx="1.4" fill="currentColor" opacity="0.78" />
+      <rect x="21.6" y="6" width="5.4" height="21" rx="1.4" fill="currentColor" opacity="0.56" />
+    </svg>
+  );
+}
+
+function StatBlock({
+  value, suffix, label, run, decimals = 0,
+}: {
+  value: number; suffix: string; label: string; run: boolean; decimals?: number;
+}) {
+  const n = useCountUp(value, run);
+  return (
+    <div style={{ textAlign: "center" }}>
+      <div style={{
+        whiteSpace: "nowrap",
+        fontSize: "clamp(26px, 4vw, 36px)",
+        fontWeight: 900,
+        lineHeight: 1,
+        fontVariantNumeric: "tabular-nums",
+        background: "linear-gradient(120deg, #6366f1, #8b5cf6)",
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+        color: "transparent",
+        WebkitTextFillColor: "transparent",
+      }}>
+        {n.toFixed(decimals)}
+        <span style={{ fontSize: "0.5em", fontWeight: 700, marginLeft: 2 }}>{suffix}</span>
+      </div>
+      <div style={{ marginTop: 8, fontSize: 12.5, fontWeight: 500, color: "var(--muted)" }}>{label}</div>
+    </div>
+  );
+}
+
+function FeatureCard({
+  accent, icon, eyebrow, title, desc, bullets, cta, href,
+}: {
+  accent: string;
+  icon: React.ReactNode;
+  eyebrow: string;
+  title: string;
+  desc: string;
+  bullets: string[];
+  cta: string;
+  href: string;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        padding: 32,
+        borderRadius: 22,
+        background: "#fff",
+        border: "1px solid rgba(99,102,241,0.10)",
+        boxShadow: hover
+          ? `0 24px 50px -18px ${accent}88`
+          : "0 14px 40px -24px rgba(49,46,129,0.45)",
+        transform: hover ? "translateY(-6px)" : "translateY(0)",
+        transition: "transform 0.25s cubic-bezier(0.3,0.7,0.4,1), box-shadow 0.25s",
+        textDecoration: "none",
+        color: "inherit",
+        willChange: "transform",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 22 }}>
+        <div style={{
+          width: 56, height: 56,
+          display: "grid", placeItems: "center",
+          borderRadius: 14,
+          background: `linear-gradient(135deg, ${accent}, #8b5cf6)`,
+          color: "#fff",
+          flexShrink: 0,
+        }}>
+          {icon}
+        </div>
+        <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", color: accent }}>
+          {eyebrow}
+        </span>
+      </div>
+      <h3 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.01em", color: "var(--text)" }}>{title}</h3>
+      <p style={{ marginTop: 12, fontSize: 14.5, lineHeight: 1.8, color: "var(--muted)" }}>{desc}</p>
+      <ul style={{ listStyle: "none", margin: "22px 0 26px", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
+        {bullets.map((b) => (
+          <li key={b} style={{ display: "flex", alignItems: "center", gap: 11, fontSize: 14, fontWeight: 500, color: "var(--text)" }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: accent, flexShrink: 0 }} />
+            {b}
+          </li>
+        ))}
+      </ul>
+      <div style={{
+        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+        padding: "15px 22px",
+        fontSize: 15.5, fontWeight: 700,
+        background: `linear-gradient(135deg, ${accent}, #8b5cf6)`,
+        color: "#fff",
+        borderRadius: 12,
+        boxShadow: `0 14px 30px -14px ${accent}`,
+      }}>
+        {cta}
+        <svg
+          width="18" height="18" viewBox="0 0 18 18" fill="none"
+          style={{ transform: hover ? "translateX(3px)" : "none", transition: "transform 0.2s" }}
+        >
+          <path d="M3 9h11M10 4.5 14.5 9 10 13.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+    </Link>
   );
 }
 
 export default function HomePage() {
+  const [run, setRun] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setRun(true), 250);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
-    <main
-      className="grid-bg"
-      style={{ minHeight: "100vh", background: "var(--bg)", position: "relative" }}
-    >
-      {/* Gradient blobs */}
+    <div style={{ minHeight: "100vh", background: "var(--bg)", position: "relative", overflowX: "hidden" }}>
+      {/* Background grid */}
       <div style={{
-        position: "fixed", top: "-15%", left: "-10%",
-        width: 600, height: 600, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)",
-        pointerEvents: "none",
-      }} />
-      <div style={{
-        position: "fixed", top: "35%", right: "-15%",
-        width: 700, height: 700, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%)",
-        pointerEvents: "none",
+        position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
+        backgroundImage:
+          "linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px)," +
+          "linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px)",
+        backgroundSize: "38px 38px",
+        WebkitMaskImage: "radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 78%)",
+        maskImage: "radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 78%)",
       }} />
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "80px 24px 60px" }}>
+      {/* Color glows */}
+      <div style={{
+        position: "fixed", zIndex: 0, pointerEvents: "none",
+        top: -180, left: "50%", transform: "translateX(-50%)",
+        width: 1100, height: 620,
+        background:
+          "radial-gradient(circle at 30% 40%, rgba(99,102,241,0.22), transparent 60%)," +
+          "radial-gradient(circle at 70% 50%, rgba(139,92,246,0.18), transparent 60%)",
+        filter: "blur(30px)",
+        opacity: 0.5,
+      }} />
 
-        {/* ── Hero ── */}
-        <div className="animate-fade-up" style={{ textAlign: "center", marginBottom: 64 }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            padding: "6px 16px", borderRadius: 20,
-            border: "1px solid rgba(99,102,241,0.3)",
-            background: "rgba(99,102,241,0.06)",
-            marginBottom: 28,
+      {/* Nav */}
+      <header style={{
+        position: "relative", zIndex: 3,
+        maxWidth: 1140, margin: "0 auto",
+        padding: "22px 28px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+          <span style={{
+            width: 38, height: 38, borderRadius: 11,
+            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            display: "grid", placeItems: "center",
+            color: "#fff",
+            boxShadow: "0 8px 18px -6px #6366f1",
+            flexShrink: 0,
           }}>
-            <span style={{ color: "#6366f1", fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: 2 }}>
-              IT_CAREER_LAB
-            </span>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10b981", display: "inline-block" }} />
-          </div>
+            <CompassMark size={20} />
+          </span>
+          <span style={{ fontSize: 18, fontWeight: 500, letterSpacing: "0.01em", color: "var(--text)" }}>
+            ITキャリア<b style={{ fontWeight: 900 }}>診断</b>
+          </span>
+        </div>
 
-          <h1 className="font-hero" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.15, marginBottom: 16, color: "var(--text)" }}>
-            あなたの<span className="gradient-text">IT適性</span>と<br />
-            <span className="gradient-text">市場価値</span>を診断する
+        <nav style={{ display: "flex", alignItems: "center", gap: 26, fontSize: 15, fontWeight: 500 }}>
+          <Link href="/diagnosis" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
+            職種診断
+          </Link>
+          <Link href="/types" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
+            職種図鑑
+          </Link>
+          <Link href="/market-value" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
+            市場価値
+          </Link>
+          <Link
+            href="/diagnosis"
+            style={{
+              color: "#fff",
+              padding: "10px 18px",
+              borderRadius: 999,
+              whiteSpace: "nowrap",
+              fontWeight: 700,
+              background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              boxShadow: "0 10px 22px -10px #6366f1",
+              textDecoration: "none",
+            }}
+          >
+            無料で診断する
+          </Link>
+        </nav>
+      </header>
+
+      {/* Main */}
+      <main style={{
+        position: "relative", zIndex: 2,
+        maxWidth: 1140, margin: "0 auto",
+        padding: "0 28px 80px",
+      }}>
+
+        {/* Hero */}
+        <section style={{ textAlign: "center", padding: "56px 0 12px" }}>
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "7px 15px", borderRadius: 999,
+            background: "#fff",
+            border: "1.5px solid rgba(99,102,241,0.4)",
+            fontSize: 13, fontWeight: 700,
+            color: "#6366f1",
+            boxShadow: "0 6px 18px -10px rgba(99,102,241,0.5)",
+          }}>
+            <span className="ping-dot" />
+            登録不要・完全無料
+          </span>
+
+          <h1 style={{
+            margin: "22px 0 0",
+            fontSize: "clamp(32px, 5.4vw, 56px)",
+            fontWeight: 900,
+            lineHeight: 1.18,
+            letterSpacing: "-0.01em",
+            color: "var(--text)",
+          }}>
+            3分で見つかる、<br />
+            <span style={{
+              background: "linear-gradient(120deg, #6366f1, #8b5cf6)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              WebkitTextFillColor: "transparent",
+            }}>
+              あなたに合うIT職種
+            </span>。
           </h1>
 
-          <p style={{ color: "var(--muted)", fontSize: 16, maxWidth: 560, margin: "0 auto 40px", lineHeight: 1.8 }}>
-            未経験・経験者どちらでも対応。14種のIT職種から適性を判定し、<br />
-            スキル・経験から転職時の想定年収を自動算出します。
+          <p style={{
+            maxWidth: 620, margin: "22px auto 0",
+            fontSize: "clamp(15px, 1.8vw, 17px)",
+            lineHeight: 1.85,
+            color: "var(--muted)",
+          }}>
+            かんたんな質問に答えるだけ。14の職種から最適なキャリアを診断し、
+            日本のIT市場での想定年収まで、まとめてチェックできます。
           </p>
 
           {/* Stats */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap" }}>
-            {[
-              { value: "14", label: "IT職種タイプ" },
-              { value: "約5分", label: "診断時間" },
-              { value: "無料", label: "完全無料" },
-            ].map(({ value, label }) => (
-              <div key={label} style={{ textAlign: "center" }}>
-                <div className="font-mono-display" style={{ fontSize: 26, fontWeight: 800, color: "#6366f1" }}>{value}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 職種図鑑リンク ── */}
-        <div className="animate-fade-up" style={{ textAlign: "center", marginBottom: 28, animationDelay: "0.05s" }}>
-          <Link
-            href="/types"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              padding: "10px 24px", borderRadius: 12,
-              border: "1px solid rgba(99,102,241,0.25)",
-              background: "rgba(99,102,241,0.04)",
-              textDecoration: "none", transition: "all 0.2s",
-            }}
-          >
-            <span style={{ fontSize: 16 }}>🧬</span>
-            <span style={{ color: "#6366f1", fontSize: 13, fontFamily: "'Space Mono', monospace" }}>
-              IT職種図鑑を見る（14職種）
-            </span>
-            <span style={{ color: "var(--muted)", fontSize: 12 }}>→</span>
-          </Link>
-        </div>
-
-        {/* ── CTA カード 2枚 ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
-          gap: 24,
-          marginBottom: 80,
-        }}>
-
-          {/* Card 1: 診断 */}
-          <Link href="/diagnosis" style={{ textDecoration: "none" }}>
-            <div
-              className="card card-hover animate-fade-up"
-              style={{
-                padding: 40, cursor: "pointer", position: "relative", overflow: "hidden",
-                animationDelay: "0.1s",
-                background: "linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%)",
-              }}
-            >
-              <div style={{
-                position: "absolute", top: -20, right: -20,
-                width: 160, height: 160, borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
-              }} />
-
-              <div style={{ marginBottom: 20 }}>
-                <div style={{
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  width: 52, height: 52, borderRadius: 14,
-                  background: "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))",
-                  border: "1px solid rgba(99,102,241,0.25)",
-                  fontSize: 24, marginBottom: 16,
-                }}>
-                  🧬
-                </div>
-                <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-                  FEATURE 01
-                </div>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", marginBottom: 10 }}>
-                  IT職種診断
-                </h2>
-                <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
-                  未経験・経験者に分かれた専用の質問で、14種のIT職種から
-                  あなたの適性を判定。適正度・向いている理由・職種ランキング・
-                  注意点まで、あなただけの結果を生成します。
-                </p>
-              </div>
-
-              <div style={{
-                padding: "14px 16px",
-                borderRadius: 10,
-                background: "rgba(99,102,241,0.05)",
-                border: "1px solid rgba(99,102,241,0.15)",
-                marginBottom: 24,
-                minHeight: 52,
-              }}>
-                <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 6, fontFamily: "'Space Mono', monospace" }}>
-                  診断結果の例 →
-                </div>
-                <TypewriterText />
-              </div>
-
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                padding: "12px 24px", borderRadius: 10,
-                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                color: "#fff",
-                fontSize: 14, fontWeight: 700,
-                boxShadow: "0 4px 16px rgba(99,102,241,0.3)",
-              }}>
-                診断スタート →
-              </div>
-
-              <div style={{ marginTop: 20, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {["所要時間 約5分", "無料", "全14タイプ対応"].map((t) => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          </Link>
-
-          {/* Card 2: 市場価値 */}
-          <Link href="/market-value" style={{ textDecoration: "none" }}>
-            <div
-              className="card card-hover animate-fade-up"
-              style={{
-                padding: 40, cursor: "pointer", position: "relative", overflow: "hidden",
-                animationDelay: "0.2s",
-                background: "linear-gradient(135deg, #ffffff 0%, #f5f0ff 100%)",
-              }}
-            >
-              <div style={{
-                position: "absolute", top: -20, right: -20,
-                width: 160, height: 160, borderRadius: "50%",
-                background: "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)",
-              }} />
-
-              <div style={{ marginBottom: 20 }}>
-                <div style={{
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  width: 52, height: 52, borderRadius: 14,
-                  background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1))",
-                  border: "1px solid rgba(139,92,246,0.25)",
-                  fontSize: 24, marginBottom: 16,
-                }}>
-                  📊
-                </div>
-                <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-                  FEATURE 02
-                </div>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", marginBottom: 10 }}>
-                  市場価値チェック
-                </h2>
-                <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.8, marginBottom: 24 }}>
-                  職種・経験年数・スキルを入力するだけ。<br />
-                  転職時の想定年収レンジと職務経歴書キーワードを自動算出します。
-                </p>
-              </div>
-
-              <div style={{
-                padding: "14px 16px",
-                borderRadius: 10,
-                background: "rgba(139,92,246,0.05)",
-                border: "1px solid rgba(139,92,246,0.15)",
-                marginBottom: 24,
-                minHeight: 52,
-                display: "flex", alignItems: "center", gap: 12,
-              }}>
-                <div>
-                  <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 2 }}>
-                    想定年収レンジ
-                  </div>
-                  <AnimatedSalary />
-                </div>
-              </div>
-
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                padding: "12px 24px", borderRadius: 10,
-                background: "linear-gradient(135deg, #8b5cf6, #6366f1)",
-                color: "#fff",
-                fontSize: 14, fontWeight: 700,
-                boxShadow: "0 4px 16px rgba(139,92,246,0.3)",
-              }}>
-                市場価値を診断 →
-              </div>
-
-              <div style={{ marginTop: 20, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                {["47+ スキル分析", "年収算出", "キーワード生成"].map((t) => (
-                  <span key={t} className="tag">{t}</span>
-                ))}
-              </div>
-            </div>
-          </Link>
-        </div>
-
-        <AdBanner style={{ marginBottom: 40 }} />
-
-        {/* ── How it works ── */}
-        <div className="animate-fade-up" style={{ animationDelay: "0.3s" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-              HOW IT WORKS
-            </div>
-            <h3 style={{ fontSize: 20, fontWeight: 800, color: "var(--text)" }}>診断の流れ</h3>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
-            {[
-              { step: "01", icon: "🎯", title: "経験を選ぶ", desc: "未経験 or 現在のIT職種を選択。それぞれに最適な質問を出題" },
-              { step: "02", icon: "⚡", title: "質問に答える", desc: "12〜15問の選択式。直感で選んでOK" },
-              { step: "03", icon: "🎁", title: "結果を受け取る", desc: "適正度・向いている理由・職種ランキング・注意点を表示" },
-            ].map(({ step, icon, title, desc }) => (
-              <div key={step} className="card" style={{ padding: 24, textAlign: "center" }}>
-                <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", marginBottom: 12 }}>
-                  STEP {step}
-                </div>
-                <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
-                <div style={{ fontWeight: 700, color: "var(--text)", marginBottom: 6 }}>{title}</div>
-                <div style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7 }}>{desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 診断結果でわかること ── */}
-        <div className="animate-fade-up" style={{ marginTop: 60, animationDelay: "0.35s" }}>
-          <div style={{ textAlign: "center", marginBottom: 28 }}>
-            <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-              WHAT YOU GET
-            </div>
-            <h3 style={{ fontSize: 20, fontWeight: 800, color: "var(--text)" }}>診断結果でわかること</h3>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
-            {[
-              { icon: "📊", label: "適正度", desc: "何%マッチしているか数値で判定" },
-              { icon: "💡", label: "向いている理由", desc: "あなたの回答を根拠にした具体的な理由" },
-              { icon: "💬", label: "開発者からのアドバイス", desc: "その職種を経験した開発者からの一言" },
-              { icon: "🏆", label: "職種ランキング", desc: "14タイプを得意な順に並べて表示" },
-              { icon: "⚠️", label: "注意点", desc: "その職種で陥りやすい落とし穴" },
-            ].map(({ icon, label, desc }) => (
-              <div key={label} className="card" style={{ padding: "18px 20px" }}>
-                <div style={{ fontSize: 22, marginBottom: 8 }}>{icon}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", marginBottom: 4 }}>{label}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>{desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── 開発者メモ ── */}
-        <div className="animate-fade-up" style={{ marginTop: 60, animationDelay: "0.4s" }}>
           <div style={{
-            padding: "28px 32px", borderRadius: 16,
-            background: "rgba(16,185,129,0.04)",
-            border: "1px solid rgba(16,185,129,0.2)",
-            borderLeft: "4px solid rgba(16,185,129,0.4)",
-            maxWidth: 640, margin: "0 auto",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            gap: "clamp(18px, 4vw, 46px)",
+            margin: "40px auto 0",
+            padding: "22px 30px",
+            maxWidth: 640,
+            background: "rgba(255,255,255,0.7)",
+            border: "1px solid rgba(99,102,241,0.12)",
+            borderRadius: 20,
+            backdropFilter: "blur(8px)",
+            boxShadow: "0 16px 44px -28px rgba(49,46,129,0.5)",
+            flexWrap: "wrap",
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-              <span style={{ fontSize: 16 }}>💬</span>
-              <span style={{ fontSize: 10, color: "#10b981", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
-                開発者メモ
-              </span>
-            </div>
-            <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 2.1, margin: 0 }}>
-              私も最初は「ITって全部プログラミング？」と思っていました。<br />
-              でも実際には、コードを書く仕事だけではなく、<br />
-              人と調整する仕事、仕組みを守る仕事もあります。
-            </p>
+            <StatBlock value={14} suffix=" 職種" label="診断できる職種数" run={run} />
+            <span style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
+            <StatBlock value={47} suffix="+ スキル" label="評価対象スキル" run={run} />
+            <span style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
+            <StatBlock value={3} suffix=" 分" label="平均所要時間" run={run} />
           </div>
-        </div>
+        </section>
 
-        {/* ── Footer ── */}
-        <div style={{ textAlign: "center", marginTop: 80, paddingTop: 40, borderTop: "1px solid var(--border)" }}>
-          <p style={{ color: "var(--muted)", fontSize: 12, fontFamily: "'Space Mono', monospace" }}>
-            IT_CAREER_LAB — 2025 Japanese IT Market Data
-          </p>
-        </div>
-      </div>
-    </main>
+        {/* Feature cards */}
+        <section className="home-cards" style={{ display: "grid", gap: 22, marginTop: 52 }}>
+          <FeatureCard
+            accent="#6366f1"
+            icon={<CompassMark size={28} />}
+            eyebrow="DIAGNOSIS"
+            title="IT職種診断"
+            desc="あなたの興味・志向・スキルから、向いているIT職種をランキングで提案します。"
+            bullets={[
+              "未経験／経験者で質問を最適化",
+              "適性スコアと強みを可視化",
+              "おすすめ職種をランキング表示",
+            ]}
+            cta="診断をはじめる"
+            href="/diagnosis"
+          />
+          <FeatureCard
+            accent="#8b5cf6"
+            icon={<ChartMark size={28} />}
+            eyebrow="MARKET VALUE"
+            title="市場価値チェック"
+            desc="職種・経験年数・スキルから、いまの想定年収と市場での立ち位置を算出します。"
+            bullets={[
+              "想定年収をリアルタイム計算",
+              "偏差値で市場価値を把握",
+              "次に伸ばすべきスキルを提案",
+            ]}
+            cta="年収をチェック"
+            href="/market-value"
+          />
+        </section>
+
+        <p style={{ marginTop: 40, textAlign: "center", fontSize: 12, color: "var(--muted)", opacity: 0.8 }}>
+          ※ 年収レンジは日本国内の公開求人・統計をもとにした推計です。実際の金額を保証するものではありません。
+        </p>
+      </main>
+    </div>
   );
 }
