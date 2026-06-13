@@ -114,6 +114,28 @@ button / card / badge / progress / dialog / sheet / separator / input / label / 
 キャンセル → /cancel
 ```
 
+## シークレット管理ルール
+
+**絶対に git にコミットしてはいけないもの:**
+- 本物の API キー・シークレット・トークン類（Stripe, Supabase, etc.）
+
+**ファイルの使い分け:**
+
+| ファイル | 中身 | git管理 |
+|---|---|---|
+| `.env.local` | 本物のキー | ❌ `.gitignore` 済み |
+| `.env.local.example` | プレースホルダーのみ | ✅ コミットしてOK |
+
+**.env.local.example の書き方（必ずこの形式で）:**
+```
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
+```
+
+**やってはいけない（過去に踏んだ地雷）:**
+- `.env.local.example` に本物のキーを書いてコミット → GitHub Secret Scanning にブロックされる
+- 履歴に残ったキーは `git filter-branch` で全履歴書き換えが必要になる
+
 ## 環境変数（`.env.local.example` 参照）
 
 ```
