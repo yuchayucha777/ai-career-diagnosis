@@ -456,15 +456,6 @@ function ResultView({
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)" }} className="grid-bg">
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "16px 24px", display: "flex", gap: 16 }}>
-        <button onClick={onRetry} style={{ background: "none", border: "none", color: "var(--muted)", fontSize: 13, cursor: "pointer", fontFamily: "'Space Mono', monospace" }}>
-          ← 再診断
-        </button>
-        <Link href="/" style={{ color: "var(--muted)", fontSize: 13, textDecoration: "none", fontFamily: "'Space Mono', monospace", marginLeft: "auto" }}>
-          ホーム
-        </Link>
-      </div>
-
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "48px 24px" }}>
 
         {/* ヘッダー */}
@@ -796,40 +787,71 @@ function ResultView({
           </div>
         </div>
 
-        {/* ── アクション ── */}
-        <div className="animate-fade-up" style={{ display: "flex", gap: 12, flexWrap: "wrap", animationDelay: "0.38s" }}>
+        {/* ── 次のステップ ── */}
+        <div className="animate-fade-up" style={{ display: "flex", flexDirection: "column", gap: 10, animationDelay: "0.38s" }}>
           <Link
             href="/market-value"
             style={{
-              padding: "12px 24px", borderRadius: 10,
-              background: "var(--purple)", color: "#fff", fontSize: 14, fontWeight: 700,
-              textDecoration: "none", display: "inline-block",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: "18px 24px", borderRadius: 14,
+              background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              color: "#fff", fontSize: 15, fontWeight: 700,
+              textDecoration: "none",
+              boxShadow: "0 14px 32px -16px #6366f1",
             }}
           >
-            次は市場価値チェック →
+            <span>市場価値チェックへ進む</span>
+            <span style={{ fontSize: 18 }}>→</span>
           </Link>
           <Link
             href="/types"
             style={{
-              padding: "12px 24px", borderRadius: 10,
-              border: "1px solid rgba(99,102,241,0.3)",
-              background: "rgba(99,102,241,0.08)",
-              color: "#4f46e5", fontSize: 14,
-              textDecoration: "none", display: "inline-block",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              padding: "16px 24px", borderRadius: 14,
+              border: "1.5px solid rgba(99,102,241,0.25)",
+              background: "rgba(99,102,241,0.05)",
+              color: "var(--text)", fontSize: 15, fontWeight: 600,
+              textDecoration: "none",
             }}
           >
-            全14タイプを見る
+            <span>IT職種図鑑で全14タイプを見る</span>
+            <span style={{ color: "#6366f1", fontSize: 18 }}>→</span>
           </Link>
+        </div>
+
+        {/* ── サブアクション ── */}
+        <div className="animate-fade-up" style={{
+          display: "flex", justifyContent: "center", gap: 32,
+          marginTop: 28, paddingTop: 24,
+          borderTop: "1px solid var(--border)",
+          animationDelay: "0.42s",
+        }}>
           <button
             onClick={onRetry}
             style={{
-              padding: "12px 24px", borderRadius: 10, border: "1px solid var(--border)",
-              background: "transparent", color: "var(--muted)", fontSize: 14, cursor: "pointer",
-              fontFamily: "inherit",
+              background: "none", border: "none", color: "var(--muted)",
+              fontSize: 13, cursor: "pointer", fontFamily: "inherit",
+              display: "flex", alignItems: "center", gap: 6,
             }}
           >
-            再診断
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" />
+            </svg>
+            もう一度診断する
           </button>
+          <Link
+            href="/"
+            style={{
+              color: "var(--muted)", textDecoration: "none",
+              fontSize: 13,
+              display: "flex", alignItems: "center", gap: 6,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            ホームに戻る
+          </Link>
         </div>
       </div>
     </main>
