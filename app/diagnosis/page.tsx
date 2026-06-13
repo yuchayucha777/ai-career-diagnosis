@@ -424,7 +424,7 @@ function ResultView({
   selectedJobId: string;
   onRetry: () => void;
 }) {
-  const { topType, rankedTypes, aptitude, reasons, episode, caution } = result;
+  const { topType, rankedTypes, aptitude, reasons, episode } = result;
   const [copied, setCopied] = useState(false);
   const isBeginner = selectedJobId === "beginner";
   const startingJob = !isBeginner ? JOB_TYPES[selectedJobId as JobTypeId] : null;
@@ -510,16 +510,16 @@ function ResultView({
               flexShrink: 0,
               background: `linear-gradient(135deg, ${topType.gradientFrom}18, ${topType.gradientTo}10)`,
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: "center",
               justifyContent: "center",
-              padding: "24px 0 0",
+              padding: "24px",
               borderRight: `1px solid ${topType.gradientFrom}20`,
             }}>
               <Image
                 src={jobImage}
                 alt={topType.name}
-                width={240}
-                height={240}
+                width={220}
+                height={220}
                 style={{ objectFit: "contain", display: "block" }}
               />
             </div>
@@ -568,9 +568,9 @@ function ResultView({
                 </p>
               </div>
 
-              {/* あなたの強み */}
+              {/* この職種に向いている特性 */}
               <div style={{ padding: "14px 16px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)", marginBottom: 12 }}>
-                <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700, marginBottom: 8 }}>あなたの強み</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700, marginBottom: 8 }}>この職種に向いている特性</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {topType.strengths.map((s) => (
                     <span key={s} style={{
@@ -653,10 +653,10 @@ function ResultView({
             <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", margin: 0 }}>
               向いている職種ランキング
             </h3>
-            <span style={{ fontSize: 12, color: "var(--muted)" }}>TOP 6</span>
+            <span style={{ fontSize: 12, color: "var(--muted)" }}>TOP 3</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {rankedTypes.slice(0, 6).map(({ type, percentage }, i) => (
+            {rankedTypes.slice(0, 3).map(({ type, percentage }, i) => (
               <div key={type.id}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 5 }}>
                   <span style={{ fontSize: i < 3 ? 17 : 12, width: 22, textAlign: "center", flexShrink: 0, color: i >= 3 ? "var(--muted)" : undefined }}>
@@ -683,29 +683,6 @@ function ResultView({
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* ── 注意点 ── */}
-        <div
-          className="animate-fade-up"
-          style={{
-            padding: "20px 24px", marginBottom: 28, borderRadius: 12,
-            background: "rgba(251,146,60,0.07)",
-            border: "1px solid rgba(251,146,60,0.25)",
-            animationDelay: "0.3s",
-          }}
-        >
-          <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-            <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>⚠️</span>
-            <div>
-              <div style={{ fontSize: 10, color: "#fb923c", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 10 }}>
-                CAUTION
-              </div>
-              <p style={{ fontSize: 13, color: "var(--text)", lineHeight: 1.9, margin: 0 }}>
-                {caution}
-              </p>
-            </div>
           </div>
         </div>
 
