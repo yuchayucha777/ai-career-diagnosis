@@ -114,23 +114,54 @@ button / card / badge / progress / dialog / sheet / separator / input / label / 
 キャンセル → /cancel
 ```
 
-## シークレット管理ルール
+## 過去の問題と対策（再発防止リスト）
 
-**絶対に git にコミットしてはいけないもの:**
-- 本物の API キー・シークレット・トークン類（Stripe, Supabase, etc.）
+### 問題1: シークレットキーを git にコミットした
 
-**ファイルの使い分け:**
+**何が起きたか:**  
+`.env.local.example` に本物の Stripe キー（`sk_test_51TXW...`）を書いてコミット・プッシュした。GitHub Secret Scanning に検出されてプッシュがブロックされ、`git filter-branch` で全履歴を書き換えることになった。
+
+**対策ルール:**
 
 | ファイル | 中身 | git管理 |
 |---|---|---|
 | `.env.local` | 本物のキー | ❌ `.gitignore` 済み |
 | `.env.local.example` | プレースホルダーのみ | ✅ コミットしてOK |
 
-**.env.local.example の書き方（必ずこの形式で）:**
+`.env.local.example` に書いてよいのはプレースホルダーのみ:
 ```
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
 ```
+
+---
+
+### 問題2: APIルートのモジュールレベルでクライアントを初期化していた
+
+**何が起きたか:**  
+`app/api/checkout/route.ts` と `app/api/webhook/route.ts` でモジュールのトップレベルに `new Stripe(process.env.STRIPE_SECRET_KEY!)` を書いていた。Next.js はビルド時に全モジュールをインポートするため、Vercel に環境変数が設定されていないとビルド時に Stripe コンストラクタがエラーを投げてデプロイが失敗した。
+
+**対策ルール:**  
+外部クライアント（Stripe・Supabase 等）はモジュールトップに書かない。必ずハンドラ関数の中で初期化する。
+
+```typescript
+// ❌ NG: モジュールレベルで初期化（Vercel でビルドエラーになる）
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export async function POST(req) { ... }
+
+// ✅ OK: ハンドラ内で初期化
+export async function POST(req) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  ...
+}
+```
+
+---
+
+## シークレット管理ルール
+
+**絶対に git にコミットしてはいけないもの:**
+- 本物の API キー・シークレット・トークン類（Stripe, Supabase, etc.）
 
 **やってはいけない（過去に踏んだ地雷）:**
 - `.env.local.example` に本物のキーを書いてコミット → GitHub Secret Scanning にブロックされる
