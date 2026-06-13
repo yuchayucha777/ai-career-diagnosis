@@ -131,6 +131,19 @@ export default function MarketValuePage() {
   const [beginnerSkills, setBeginnerSkills] = useState<Set<BeginnerSkillId>>(new Set());
   const [prevSalary, setPrevSalary] = useState<number | "">("");
   const [beginnerResult, setBeginnerResult] = useState<BeginnerMarketValueResult | null>(null);
+  const [beginnerQualification, setBeginnerQualification] = useState<string>("");
+
+  // 経験者の保有資格（複数選択）
+  const [qualifications, setQualifications] = useState<Set<string>>(new Set());
+
+  function toggleQualification(id: string) {
+    setQualifications((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   function toggleSkill(id: SkillId) {
     setSkills((prev) => {
@@ -330,10 +343,46 @@ export default function MarketValuePage() {
               </div>
             </div>
 
+            {/* Beginner Qualification */}
+            <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.2s" }}>
+              <label style={{ display: "block", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 16 }}>
+                04 / 勉強中・取得済みの資格・スキル
+              </label>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {[
+                  { id: "ip", label: "ITパスポート（IP）を勉強中または取得済み" },
+                  { id: "fe", label: "基本情報技術者試験（FE）を勉強中または取得済み" },
+                  { id: "ap", label: "応用情報技術者試験（AP）または高度情報処理を勉強中・取得済み" },
+                  { id: "sg", label: "情報セキュリティマネジメント試験（SG）を勉強中または取得済み" },
+                  { id: "programming", label: "プログラミング（HTML・JavaScript・Python 等）を独学中" },
+                  { id: "none", label: "まだIT関連の勉強は始めていない" },
+                ].map((q) => (
+                  <button
+                    key={q.id}
+                    type="button"
+                    onClick={() => setBeginnerQualification(beginnerQualification === q.id ? "" : q.id)}
+                    style={{
+                      padding: "10px 16px",
+                      borderRadius: 8,
+                      border: beginnerQualification === q.id ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
+                      background: beginnerQualification === q.id ? "rgba(59,130,246,0.1)" : "var(--surface-2)",
+                      color: beginnerQualification === q.id ? "#4f46e5" : "var(--muted)",
+                      fontSize: 13, cursor: "pointer", textAlign: "left",
+                      transition: "all 0.15s", fontFamily: "inherit",
+                      display: "flex", alignItems: "center", gap: 8,
+                    }}
+                  >
+                    {beginnerQualification === q.id && <span>✓</span>}
+                    {q.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Previous salary */}
-            <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.2s" }}>
+            <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.25s" }}>
               <label style={{ display: "block", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 12 }}>
-                04 / 前職・現職の年収（任意）
+                05 / 前職・現職の年収（任意）
               </label>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <input
@@ -361,7 +410,7 @@ export default function MarketValuePage() {
                 border: "none", color: "#fff", fontSize: 16, fontWeight: 700,
                 cursor: "pointer", fontFamily: "inherit",
                 boxShadow: "0 4px 20px rgba(63,185,80,0.3)",
-                animationDelay: "0.25s",
+                animationDelay: "0.3s",
                 transition: "transform 0.2s, box-shadow 0.2s",
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)"; }}
@@ -494,10 +543,52 @@ export default function MarketValuePage() {
             </div>
           </div>
 
+          {/* Qualifications */}
+          <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.2s" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <label style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
+                04 / 保有しているIT資格（複数選択可）
+              </label>
+              <span style={{ fontSize: 12, color: "#6366f1", fontFamily: "'Space Mono', monospace" }}>
+                {qualifications.size} 選択中
+              </span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {[
+                { id: "ip_fe", label: "ITパスポート（IP）または基本情報技術者試験（FE）" },
+                { id: "ap", label: "応用情報技術者試験（AP）または高度情報処理技術者（NW・DB・SC 等）" },
+                { id: "cloud_cert", label: "AWS / GCP / Azure などクラウドベンダー認定資格" },
+                { id: "network_cert", label: "CCNA / CCNP などネットワーク系資格" },
+                { id: "security_cert", label: "CISSP / CEH / 情報セキュリティスペシャリスト などセキュリティ系資格" },
+                { id: "pm_cert", label: "PMP / プロジェクトマネージャー試験 などマネジメント系資格" },
+                { id: "none", label: "資格は特に保有していない" },
+              ].map((q) => (
+                <button
+                  key={q.id}
+                  type="button"
+                  onClick={() => toggleQualification(q.id)}
+                  style={{
+                    padding: "10px 16px",
+                    borderRadius: 8,
+                    border: qualifications.has(q.id) ? "1px solid rgba(59,130,246,0.6)" : "1px solid var(--border)",
+                    background: qualifications.has(q.id) ? "rgba(59,130,246,0.12)" : "var(--surface-2)",
+                    color: qualifications.has(q.id) ? "#4f46e5" : "var(--muted)",
+                    fontSize: 13, cursor: "pointer", textAlign: "left",
+                    transition: "all 0.15s", fontFamily: "inherit",
+                    display: "flex", alignItems: "center", gap: 8,
+                  }}
+                >
+                  {qualifications.has(q.id) && <span>✓</span>}
+                  {q.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Current salary */}
-          <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.2s" }}>
+          <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 24, animationDelay: "0.25s" }}>
             <label style={{ display: "block", fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 12 }}>
-              04 / 現在の年収（任意）
+              05 / 現在の年収（任意）
             </label>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <input
@@ -528,7 +619,7 @@ export default function MarketValuePage() {
               border: "none", color: "#fff", fontSize: 16, fontWeight: 700,
               cursor: "pointer", fontFamily: "inherit",
               boxShadow: "0 4px 20px rgba(59,130,246,0.3)",
-              animationDelay: "0.25s",
+              animationDelay: "0.3s",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 30px rgba(59,130,246,0.4)"; }}
