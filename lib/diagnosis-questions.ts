@@ -134,7 +134,34 @@ export const BEGINNER_QUESTIONS: Question[] = [
       { text: "電子部品やハードウェアを組み合わせて実際に動かした", scores: { embedded: 3, network: 2 } },
     ],
   },
+  {
+    id: 13,
+    text: "現在勉強中・取得済みのIT資格やスキルは？（最も力を入れているものを選択）",
+    options: [
+      { text: "ITパスポート（IP）を勉強中または取得済み", scores: { helpdesk: 2, se: 1, tester: 1 } },
+      { text: "基本情報技術者試験（FE）を勉強中または取得済み", scores: { programmer: 3, se: 2 } },
+      { text: "応用情報技術者試験（AP）または高度情報処理を勉強中・取得済み", scores: { se: 3, pm: 1 } },
+      { text: "情報セキュリティマネジメント試験（SG）を勉強中または取得済み", scores: { security: 3, helpdesk: 1 } },
+      { text: "プログラミング（HTML・JavaScript・Python 等）を独学中", scores: { web: 2, programmer: 2 } },
+      { text: "まだIT関連の勉強は始めていない", scores: { helpdesk: 1 } },
+    ],
+  },
 ];
+
+// ── IT経験者向け 共通質問（全職種末尾に追加） ───────────────────────────
+const EXPERIENCED_QUALIFICATION_QUESTION: Question = {
+  id: 99,
+  text: "現在保有しているIT資格を教えてください（最もレベルが高いものを選択）",
+  options: [
+    { text: "ITパスポート（IP）または基本情報技術者試験（FE）", scores: { se: 1, helpdesk: 1 } },
+    { text: "応用情報技術者試験（AP）または高度情報処理技術者（NW・DB・SC 等）", scores: { se: 3, network: 1, security: 1 } },
+    { text: "AWS / GCP / Azure などクラウドベンダー認定資格", scores: { cloud: 3, server: 1 } },
+    { text: "CCNA / CCNP などネットワーク系資格", scores: { network: 3, server: 1 } },
+    { text: "CISSP / CEH / 情報セキュリティスペシャリスト などセキュリティ系資格", scores: { security: 3 } },
+    { text: "PMP / プロジェクトマネージャー試験 などマネジメント系資格", scores: { pm: 3, se: 1 } },
+    { text: "資格は特に保有していない", scores: { programmer: 1 } },
+  ],
+};
 
 // ── IT経験者向け 職種別 8問 ──────────────────────────────────────────────
 const WEB_QUESTIONS: Question[] = [
@@ -2298,7 +2325,8 @@ export const JOB_SPECIFIC_QUESTIONS: Record<JobTypeId, Question[]> = {
 
 export function getQuestions(jobId: string): Question[] {
   if (jobId === "beginner") return BEGINNER_QUESTIONS;
-  return JOB_SPECIFIC_QUESTIONS[jobId as JobTypeId] ?? BEGINNER_QUESTIONS;
+  const base = JOB_SPECIFIC_QUESTIONS[jobId as JobTypeId] ?? BEGINNER_QUESTIONS;
+  return [...base, EXPERIENCED_QUALIFICATION_QUESTION];
 }
 
 const ZERO_SCORES = (): Record<JobTypeId, number> => ({

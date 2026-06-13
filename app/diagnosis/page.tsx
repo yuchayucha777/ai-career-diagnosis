@@ -403,7 +403,7 @@ export default function DiagnosisPage() {
           </div>
 
           <p style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>
-            直感で答えるのがオススメ。あとから変更できます。
+            直感で答えるのがオススメです。
           </p>
           <AdBanner style={{ marginTop: 24 }} />
         </div>
