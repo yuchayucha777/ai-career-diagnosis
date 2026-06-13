@@ -32,7 +32,6 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
         <div style={{ width: "100%", maxWidth: 600 }}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 12 }}>
-              MARKET VALUE ANALYSIS
             </div>
             <h1 style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
               あなたのIT経験を教えてください
@@ -221,10 +220,7 @@ export default function MarketValuePage() {
 
         <div style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px" }}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div className="font-mono-display" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-              BEGINNER MARKET VALUE
-            </div>
-            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#fff", marginBottom: 8 }}>
+            <h1 style={{ fontSize: 28, fontWeight: 900, color: "var(--text)", marginBottom: 8 }}>
               IT転職の入社想定年収を診断
             </h1>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -602,9 +598,6 @@ function BeginnerResultView({
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
 
         <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2, marginBottom: 8 }}>
-            BEGINNER MARKET VALUE RESULT
-          </div>
           <span style={{
             display: "inline-block",
             padding: "4px 14px", borderRadius: 20, fontSize: 11,
@@ -796,9 +789,6 @@ function ResultView({
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 24px" }}>
 
         <div style={{ textAlign: "center", marginBottom: 8 }}>
-          <div className="font-mono-display" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: 2 }}>
-            MARKET VALUE RESULT
-          </div>
         </div>
 
         {/* Main salary card */}
