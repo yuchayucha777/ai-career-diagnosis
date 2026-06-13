@@ -26,32 +26,21 @@ export default function TypesPage() {
       <header style={{
         position: "relative", zIndex: 3,
         maxWidth: 1140, margin: "0 auto",
-        padding: "22px 28px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "18px 28px",
+        display: "flex", alignItems: "center",
       }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none", color: "inherit" }}>
-          <span style={{
-            width: 38, height: 38, borderRadius: 11,
-            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-            display: "grid", placeItems: "center", color: "#fff",
-            boxShadow: "0 8px 18px -6px #6366f1", flexShrink: 0,
-          }}>
-            <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="2.2" />
-              <path d="M16 9.5 18.6 16 16 22.5 13.4 16Z" fill="currentColor" />
-              <circle cx="16" cy="16" r="1.8" fill="#fff" />
-            </svg>
-          </span>
-          <span style={{ fontSize: 18, fontWeight: 500 }}>
-            ITキャリア<b style={{ fontWeight: 900 }}>診断</b>
-          </span>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            color: "var(--muted)", textDecoration: "none", fontSize: 14, fontWeight: 600,
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          ホームに戻る
         </Link>
-
-        <nav style={{ display: "flex", alignItems: "center", gap: 24, fontSize: 15, fontWeight: 500 }}>
-          <Link href="/diagnosis" style={{ color: "var(--muted)", textDecoration: "none" }} className="nav-link-hover">職種診断</Link>
-          <Link href="/types" style={{ color: "var(--text)", textDecoration: "none", fontWeight: 700 }}>職種図鑑</Link>
-          <Link href="/market-value" style={{ color: "var(--muted)", textDecoration: "none" }} className="nav-link-hover">市場価値</Link>
-        </nav>
       </header>
 
       {/* page heading */}
