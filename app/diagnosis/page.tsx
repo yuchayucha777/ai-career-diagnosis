@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { JOB_TYPES, type JobTypeId, type DiagnosisResult } from "@/lib/diagnosis";
+import { JOBS } from "@/data/jobs";
 import AdBanner from "@/components/AdBanner";
 
 type Phase = "exp-select" | "job-select" | "quiz" | "result";
@@ -429,6 +430,7 @@ function ResultView({
   const startingJob = !isBeginner ? JOB_TYPES[selectedJobId as JobTypeId] : null;
   const jobImage = JOB_IMAGE[topType.id];
   const medals = ["🥇", "🥈", "🥉"];
+  const jobData = JOBS.find((j) => j.id === topType.id);
 
   const shareText = `IT職種診断やってみた！\n結果：${topType.emoji} ${topType.name}（適正度 ${aptitude}%）\n「${topType.tagline}」\n#IT職種診断 #エンジニア転職`;
   const shareUrl = "https://ai-career-diagnosis-nine.vercel.app/diagnosis";
@@ -530,15 +532,15 @@ function ResultView({
               <h1 style={{ fontSize: 28, fontWeight: 900, color: "var(--text)", marginBottom: 6, lineHeight: 1.2 }}>
                 {topType.name}
               </h1>
-              <p style={{ color: topType.color, fontStyle: "italic", fontSize: 13, marginBottom: 24 }}>
+              <p style={{ color: topType.color, fontStyle: "italic", fontSize: 13, marginBottom: 20 }}>
                 「{topType.tagline}」
               </p>
 
-              {/* 適正度 */}
-              <div style={{ marginBottom: 24 }}>
+              {/* 向いてる度 */}
+              <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                  <span style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
-                    APTITUDE
+                  <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600 }}>
+                    向いてる度
                   </span>
                   <span style={{ fontSize: 28, fontWeight: 900, color: topType.color, fontFamily: "'Space Mono', monospace", lineHeight: 1 }}>
                     {aptitude}
@@ -558,14 +560,22 @@ function ResultView({
                 </div>
               </div>
 
-              {/* STRENGTHS */}
+              {/* 仕事内容 */}
               <div style={{ padding: "14px 16px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)", marginBottom: 12 }}>
-                <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 8, letterSpacing: 1 }}>STRENGTHS</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700, marginBottom: 8 }}>この仕事でやること</div>
+                <p style={{ fontSize: 12.5, color: "var(--text)", lineHeight: 1.85, margin: 0 }}>
+                  {topType.description}
+                </p>
+              </div>
+
+              {/* あなたの強み */}
+              <div style={{ padding: "14px 16px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)", marginBottom: 12 }}>
+                <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700, marginBottom: 8 }}>あなたの強み</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {topType.strengths.map((s) => (
                     <span key={s} style={{
-                      fontSize: 11, color: "var(--text)",
-                      padding: "3px 8px", borderRadius: 6,
+                      fontSize: 11.5, color: "var(--text)",
+                      padding: "4px 10px", borderRadius: 6,
                       background: `${topType.gradientFrom}18`,
                       border: `1px solid ${topType.gradientFrom}30`,
                     }}>
@@ -575,35 +585,29 @@ function ResultView({
                 </div>
               </div>
 
-              {/* COMPANY / ROLES */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                <div style={{ padding: "12px 14px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
-                  <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>COMPANY</div>
-                  {topType.recommendedCompanyTypes.map((c) => (
-                    <div key={c} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-                      <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#8b5cf6", flexShrink: 0 }} />
-                      <span style={{ fontSize: 11, color: "var(--text)" }}>{c}</span>
-                    </div>
-                  ))}
+              {/* 想定年収 */}
+              {jobData && (
+                <div style={{ padding: "14px 16px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
+                  <div style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700, marginBottom: 8 }}>想定年収</div>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                    <span style={{ fontSize: 13, color: "var(--muted)" }}>中央値</span>
+                    <span style={{ fontSize: 22, fontWeight: 900, color: topType.color, fontFamily: "'Space Mono', monospace" }}>
+                      {jobData.median}
+                    </span>
+                    <span style={{ fontSize: 13, color: "var(--muted)" }}>万円</span>
+                    <span style={{ fontSize: 12, color: "var(--muted)", marginLeft: 4 }}>
+                      （{jobData.range[0]}〜{jobData.range[1]}万円）
+                    </span>
+                  </div>
                 </div>
-                <div style={{ padding: "12px 14px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
-                  <div style={{ fontSize: 10, color: "var(--muted)", fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>ROLES</div>
-                  {topType.relatedRoles.map((r) => (
-                    <div key={r} style={{ marginBottom: 3 }}>
-                      <span className="tag tag-blue" style={{ fontSize: 10 }}>{r}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              )}
+
             </div>
           </div>
         </div>
 
         {/* ── なぜ向いているのか ── */}
         <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.15s" }}>
-          <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 14 }}>
-            WHY IT FITS YOU
-          </div>
           <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", marginBottom: 16 }}>
             あなたに向いている理由
           </h3>
@@ -646,12 +650,10 @@ function ResultView({
         {/* ── 向いている職種ランキング ── */}
         <div className="card animate-fade-up" style={{ padding: "24px 28px", marginBottom: 16, animationDelay: "0.25s" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-            <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2 }}>
-              RANKING
-            </div>
-            <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>
-              向いている職種 TOP 6
-            </div>
+            <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", margin: 0 }}>
+              向いている職種ランキング
+            </h3>
+            <span style={{ fontSize: 12, color: "var(--muted)" }}>TOP 6</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {rankedTypes.slice(0, 6).map(({ type, percentage }, i) => (
@@ -711,8 +713,8 @@ function ResultView({
 
         {/* ── シェア ── */}
         <div className="card animate-fade-up" style={{ padding: "20px 24px", marginBottom: 16, animationDelay: "0.3s" }}>
-          <div style={{ fontSize: 11, color: "var(--muted)", fontFamily: "'Space Mono', monospace", letterSpacing: 2, marginBottom: 14 }}>
-            SHARE RESULT
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)", marginBottom: 14 }}>
+            結果をシェアする
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             {/* X (Twitter) */}
