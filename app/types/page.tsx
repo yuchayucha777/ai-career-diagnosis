@@ -32,8 +32,12 @@ export default function TypesPage() {
         <Link
           href="/"
           style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            color: "var(--muted)", textDecoration: "none", fontSize: 14, fontWeight: 600,
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "10px 20px", borderRadius: 10,
+            border: "1.5px solid rgba(99,102,241,0.25)",
+            background: "#fff",
+            color: "var(--text)", textDecoration: "none", fontSize: 14, fontWeight: 700,
+            boxShadow: "0 2px 8px -4px rgba(99,102,241,0.2)",
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
