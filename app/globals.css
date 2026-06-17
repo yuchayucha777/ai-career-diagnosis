@@ -193,6 +193,7 @@ body {
 }
 .home-cards { grid-template-columns: 1fr 1fr; }
 .nav-link-hover:hover { color: var(--text) !important; }
+.footer-link:hover { color: var(--text) !important; }
 @media (max-width: 760px) {
   .home-cards { grid-template-columns: 1fr; }
 }

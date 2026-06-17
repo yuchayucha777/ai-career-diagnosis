@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
+import Script from "next/script";
+import Footer from "@/components/Footer";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -23,9 +25,13 @@ export default function RootLayout({
     <html lang="ja" className={cn("h-full", "font-sans", geist.variable)}>
       <body className="min-h-full flex flex-col">
         {children}
+        <Footer />
         <Toaster />
         <Analytics />
         <SpeedInsights />
+        {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
+          <Script id="clarity" strategy="afterInteractive">{`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID}");`}</Script>
+        )}
       </body>
     </html>
   );
