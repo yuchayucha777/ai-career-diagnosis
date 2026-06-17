@@ -81,11 +81,17 @@ Vercelへのデプロイはトークン方式（`vercel.md` 参照）。
 button / card / badge / progress / dialog / sheet / separator / input / label / tabs / sonner
 
 ### 集客・計測
-| パッケージ | 用途 |
+| パッケージ / サービス | 用途 |
 |---|---|
 | @vercel/analytics | ページビュー計測（layout.tsx に組み込み済み） |
 | @vercel/speed-insights | Core Web Vitals 計測（layout.tsx に組み込み済み） |
 | next-sitemap | ビルド時にsitemap.xml自動生成（`postbuild` に設定済み） |
+| Microsoft Clarity | ヒートマップ・セッション録画（layout.tsx に組み込み済み） |
+
+#### Microsoft Clarity セットアップ
+- プロジェクトID: `x8gmakejo4`（clarity.microsoft.com → IT職種診断プロジェクト）
+- 環境変数 `NEXT_PUBLIC_CLARITY_PROJECT_ID` が未設定の場合はスクリプト未挿入（ローカル開発時は設定不要）
+- Vercel 環境変数にも同じキー・値を設定すること
 
 ### マネタイズ・決済
 | パッケージ | 用途 |
