@@ -433,7 +433,7 @@ function ResultView({
   const jobData = JOBS.find((j) => j.id === topType.id);
 
   const shareText = `IT職種診断やってみた！\n結果：${topType.emoji} ${topType.name}（適正度 ${aptitude}%）\n「${topType.tagline}」\n#IT職種診断 #エンジニア転職`;
-  const shareUrl = "https://ai-career-diagnosis-nine.vercel.app/diagnosis";
+  const shareUrl = "https://ai-career-diagnosis.vercel.app/diagnosis";
 
   function openX() {
     window.open(
