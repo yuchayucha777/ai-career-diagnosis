@@ -405,7 +405,7 @@ export default function DiagnosisPage() {
           <p style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>
             直感で答えるのがオススメです。
           </p>
-          <AdBanner style={{ marginTop: 24 }} />
+          <AdBanner variant="quiz" style={{ marginTop: 24 }} />
         </div>
       </div>
     </main>
