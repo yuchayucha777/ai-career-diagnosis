@@ -26,7 +26,7 @@ export default function TermsPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
           <Article title="第1条（適用）">
             <p>
-              本規約は、Daichi Akita（以下「運営者」）が運営するWebサービス「ITキャリア診断」（以下「本サービス」）の利用に関する条件を定めるものです。
+              本規約は、「ITキャリア診断」運営者（以下「運営者」）が運営するWebサービス「ITキャリア診断」（以下「本サービス」）の利用に関する条件を定めるものです。
               ユーザーは本サービスを利用することで、本規約に同意したものとみなされます。
             </p>
           </Article>
@@ -114,12 +114,6 @@ export default function TermsPage() {
           </Article>
         </div>
 
-        <div style={{ marginTop: 56, padding: "20px 24px", borderRadius: 12, background: "var(--surface)", border: "1px solid var(--border)", fontSize: 14 }}>
-          <div style={{ fontWeight: 700, color: "var(--text)", marginBottom: 8 }}>お問い合わせ</div>
-          <p style={{ color: "var(--muted)", lineHeight: 1.8 }}>
-            本規約に関するご質問は、<a href="mailto:daichi0503ad@gmail.com" style={{ color: "#6366f1", textDecoration: "none" }}>daichi0503ad@gmail.com</a> までお問い合わせください。
-          </p>
-        </div>
       </main>
     </div>
   );

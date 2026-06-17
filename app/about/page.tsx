@@ -89,8 +89,6 @@ export default function AboutPage() {
             {[
               ["サービス名", "ITキャリア診断"],
               ["URL", "https://ai-career-diagnosis.vercel.app"],
-              ["運営者", "Daichi Akita"],
-              ["お問い合わせ", "daichi0503ad@gmail.com"],
             ].map(([label, value]) => (
               <tr key={label} style={{ borderBottom: "1px solid var(--border)" }}>
                 <td style={{ padding: "12px 16px 12px 0", color: "var(--muted)", fontWeight: 600, whiteSpace: "nowrap", verticalAlign: "top", width: 140 }}>{label}</td>

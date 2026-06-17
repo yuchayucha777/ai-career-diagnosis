@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
           <Article title="1. 基本方針">
             <p>
-              Daichi Akita（以下「運営者」）は、「ITキャリア診断」（以下「本サービス」）におけるユーザーのプライバシーを尊重し、
+              「ITキャリア診断」運営者（以下「運営者」）は、「ITキャリア診断」（以下「本サービス」）におけるユーザーのプライバシーを尊重し、
               個人情報の保護に努めます。本ポリシーは、本サービスにおける個人情報・利用データの取り扱いについて説明します。
             </p>
           </Article>
@@ -159,17 +159,8 @@ export default function PrivacyPage() {
 
           <Article title="10. お問い合わせ">
             <p>
-              プライバシーに関するご質問・ご要望は、以下の連絡先までお問い合わせください。
+              プライバシーに関するご質問・ご要望は、本サービスのお問い合わせフォームよりご連絡ください。
             </p>
-            <div style={{
-              marginTop: 16, padding: "16px 20px", borderRadius: 10,
-              background: "rgba(99,102,241,0.04)", border: "1px solid rgba(99,102,241,0.15)",
-            }}>
-              <p style={{ fontSize: 14, color: "var(--text)" }}>運営者: Daichi Akita</p>
-              <p style={{ fontSize: 14, color: "var(--text)", marginTop: 6 }}>
-                メール: <a href="mailto:daichi0503ad@gmail.com" style={{ color: "#6366f1", textDecoration: "none" }}>daichi0503ad@gmail.com</a>
-              </p>
-            </div>
           </Article>
         </div>
 
