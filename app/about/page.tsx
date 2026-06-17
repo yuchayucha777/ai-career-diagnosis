@@ -38,7 +38,7 @@ export default function AboutPage() {
             background: "rgba(99,102,241,0.08)",
             border: "1px solid rgba(99,102,241,0.2)",
             marginBottom: 20,
-          }}>ABOUT</span>
+          }}>サービス情報</span>
           <h1 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 900, color: "var(--text)", lineHeight: 1.3 }}>
             このサービスについて
           </h1>

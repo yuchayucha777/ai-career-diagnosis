@@ -33,7 +33,7 @@ export default function HowToUsePage() {
             fontSize: 12, fontWeight: 700, letterSpacing: "0.12em",
             color: "#6366f1", background: "rgba(99,102,241,0.08)",
             border: "1px solid rgba(99,102,241,0.2)", marginBottom: 20,
-          }}>HOW TO USE</span>
+          }}>使い方ガイド</span>
           <h1 style={{ fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 900, color: "var(--text)", lineHeight: 1.3 }}>
             使い方
           </h1>
@@ -46,7 +46,7 @@ export default function HowToUsePage() {
         <StepCard
           step={1}
           accent="#6366f1"
-          tag="DIAGNOSIS"
+          tag="職種診断"
           title="IT職種診断"
           href="/diagnosis"
           cta="診断をはじめる"
@@ -65,7 +65,7 @@ export default function HowToUsePage() {
         <StepCard
           step={2}
           accent="#8b5cf6"
-          tag="MARKET VALUE"
+          tag="市場価値"
           title="市場価値チェック"
           href="/market-value"
           cta="年収をチェック"
@@ -84,7 +84,7 @@ export default function HowToUsePage() {
         <StepCard
           step={3}
           accent="#6366f1"
-          tag="JOB CATALOG"
+          tag="職種図鑑"
           title="IT職種図鑑"
           href="/types"
           cta="図鑑を見る"
