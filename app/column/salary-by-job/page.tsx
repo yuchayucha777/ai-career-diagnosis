@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "IT職種別の年収相場2025年版【14職種を比較】 | ITキャリア診断",
+  title: "IT職種別の年収相場2026年版【14職種を比較】 | ITキャリア診断",
   description: "Webエンジニア・インフラ・AI・PM・コンサルなど14職種の年収レンジを未経験〜シニアまで段階別に比較。IT転職での年収アップのポイントも解説。",
 };
 
@@ -61,7 +61,7 @@ export default function SalaryByJobPage() {
             <span style={{ fontSize: 12, color: "var(--muted)" }}>約10分で読めます</span>
           </div>
           <h1 style={{ fontSize: "clamp(22px, 4vw, 34px)", fontWeight: 900, color: "var(--text)", lineHeight: 1.35 }}>
-            IT職種別の年収相場2025年版【14職種を比較】
+            IT職種別の年収相場2026年版【14職種を比較】
           </h1>
           <p style={{ marginTop: 16, fontSize: 15, lineHeight: 1.9, color: "var(--muted)" }}>
             「IT業界に転職したいが、どの職種が稼げるのか」「今の年収は市場と比べて妥当か」という疑問に答えます。14職種の年収レンジを未経験（入社1〜2年目）・ミドル（3〜6年）・シニア（7年以上）の3段階で比較しました。

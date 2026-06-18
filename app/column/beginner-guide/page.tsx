@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "未経験からITエンジニアになる方法【2025年版】 | ITキャリア診断",
+  title: "未経験からITエンジニアになる方法【2026年版】 | ITキャリア診断",
   description: "文系・非IT職種からエンジニア転職を成功させるロードマップ。学習期間・費用・おすすめの入り口職種、転職エージェントの選び方まで解説。",
 };
 
@@ -44,7 +44,7 @@ export default function BeginnerGuidePage() {
             <span style={{ fontSize: 12, color: "var(--muted)" }}>約8分で読めます</span>
           </div>
           <h1 style={{ fontSize: "clamp(22px, 4vw, 34px)", fontWeight: 900, color: "var(--text)", lineHeight: 1.35 }}>
-            未経験からITエンジニアになる方法【2025年版】
+            未経験からITエンジニアになる方法【2026年版】
           </h1>
           <p style={{ marginTop: 16, fontSize: 15, lineHeight: 1.9, color: "var(--muted)" }}>
             「プログラミングを勉強しているけど、どうすれば転職できるの？」「文系でもエンジニアになれる？」という疑問に答えます。2025年時点でのリアルな転職ロードマップを解説します。

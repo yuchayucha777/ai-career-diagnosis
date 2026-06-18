@@ -10,7 +10,7 @@ const ARTICLES = [
   {
     href: "/column/beginner-guide",
     category: "未経験転職",
-    title: "未経験からITエンジニアになる方法【2025年版】",
+    title: "未経験からITエンジニアになる方法【2026年版】",
     desc: "文系・非IT職種からエンジニア転職を成功させるロードマップ。学習期間・費用・おすすめの入り口職種まで解説します。",
     readTime: "約8分",
   },
@@ -24,7 +24,7 @@ const ARTICLES = [
   {
     href: "/column/salary-by-job",
     category: "年収・市場価値",
-    title: "IT職種別の年収相場2025年版【14職種を比較】",
+    title: "IT職種別の年収相場2026年版【14職種を比較】",
     desc: "Webエンジニア・インフラエンジニア・AIエンジニア・PM・コンサルタントなど14職種の年収レンジを未経験〜シニアまで段階別に比較します。",
     readTime: "約10分",
   },
