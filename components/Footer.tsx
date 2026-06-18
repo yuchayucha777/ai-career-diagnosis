@@ -32,6 +32,7 @@ export default function Footer() {
                   { href: "/diagnosis", label: "IT職種診断" },
                   { href: "/market-value", label: "市場価値チェック" },
                   { href: "/types", label: "IT職種図鑑" },
+                  { href: "/column", label: "IT転職コラム" },
                 ].map(({ href, label }) => (
                   <li key={href}>
                     <Link href={href} style={{ fontSize: 14, color: "var(--muted)", textDecoration: "none" }}

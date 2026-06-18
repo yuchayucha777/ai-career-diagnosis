@@ -86,15 +86,25 @@ export default function AboutPage() {
 
         <Section title="運営者情報">
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-            {[
-              ["サービス名", "ITキャリア診断"],
-              ["URL", "https://ai-career-diagnosis.vercel.app"],
-            ].map(([label, value]) => (
-              <tr key={label} style={{ borderBottom: "1px solid var(--border)" }}>
-                <td style={{ padding: "12px 16px 12px 0", color: "var(--muted)", fontWeight: 600, whiteSpace: "nowrap", verticalAlign: "top", width: 140 }}>{label}</td>
-                <td style={{ padding: "12px 0", color: "var(--text)" }}>{value}</td>
-              </tr>
-            ))}
+            <tbody>
+              {([
+                ["サービス名", "ITキャリア診断"],
+                ["運営者", "にゃんころ准教授"],
+                ["URL", "https://ai-career-diagnosis.vercel.app"],
+                ["問い合わせ", "dazhi1756@gmail.com"],
+              ] as [string, string][]).map(([label, value]) => (
+                <tr key={label} style={{ borderBottom: "1px solid var(--border)" }}>
+                  <td style={{ padding: "12px 16px 12px 0", color: "var(--muted)", fontWeight: 600, whiteSpace: "nowrap", verticalAlign: "top", width: 140 }}>{label}</td>
+                  <td style={{ padding: "12px 0", color: "var(--text)" }}>
+                    {label === "問い合わせ" ? (
+                      <a href={`mailto:${value}`} style={{ color: "#6366f1", textDecoration: "none" }}>{value}</a>
+                    ) : label === "URL" ? (
+                      <a href={value} style={{ color: "#6366f1", textDecoration: "none" }}>{value}</a>
+                    ) : value}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </Section>
 
