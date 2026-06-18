@@ -819,6 +819,43 @@ function BeginnerResultView({
           </div>
         )}
 
+        {/* 転職相談への送客枠（アフィリエイトリンクに差し替える） */}
+        <div
+          className="animate-fade-up"
+          style={{
+            padding: "24px 28px", marginBottom: 20, borderRadius: 12,
+            background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+            border: "1px solid rgba(245,158,11,0.3)",
+            animationDelay: "0.3s",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 11, color: "#d97706", fontFamily: "'Space Mono', monospace", letterSpacing: 2, fontWeight: 700 }}>
+              PR
+            </span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "var(--text)" }}>
+              転職を本格的に考えているなら
+            </span>
+          </div>
+          <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 1.8, marginBottom: 16 }}>
+            市場価値診断の結果をもとに、専任のキャリアアドバイザーに無料相談できます。
+            年収アップの求人紹介・面接対策・条件交渉まで一貫サポートしてもらえます。
+          </p>
+          <a
+            href="#"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "12px 22px", borderRadius: 10,
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              color: "#fff", fontSize: 14, fontWeight: 700,
+              textDecoration: "none",
+              boxShadow: "0 4px 16px rgba(245,158,11,0.35)",
+            }}
+          >
+            無料でキャリア相談する →
+          </a>
+        </div>
+
         {/* Actions */}
         <div className="animate-fade-up" style={{ display: "flex", gap: 12, flexWrap: "wrap", animationDelay: "0.35s" }}>
           <button
@@ -1055,6 +1092,43 @@ function ResultView({
               スキルを選択するとキーワードが生成されます
             </p>
           )}
+        </div>
+
+        {/* 転職相談への送客枠（アフィリエイトリンクに差し替える） */}
+        <div
+          className="animate-fade-up"
+          style={{
+            padding: "24px 28px", marginBottom: 20, borderRadius: 12,
+            background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+            border: "1px solid rgba(245,158,11,0.3)",
+            animationDelay: "0.3s",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 11, color: "#d97706", fontFamily: "'Space Mono', monospace", letterSpacing: 2, fontWeight: 700 }}>
+              PR
+            </span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "var(--text)" }}>
+              転職を本格的に考えているなら
+            </span>
+          </div>
+          <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 1.8, marginBottom: 16 }}>
+            市場価値診断の結果をもとに、専任のキャリアアドバイザーに無料相談できます。
+            年収アップの求人紹介・面接対策・条件交渉まで一貫サポートしてもらえます。
+          </p>
+          <a
+            href="#"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "12px 22px", borderRadius: 10,
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              color: "#fff", fontSize: 14, fontWeight: 700,
+              textDecoration: "none",
+              boxShadow: "0 4px 16px rgba(245,158,11,0.35)",
+            }}
+          >
+            無料でキャリア相談する →
+          </a>
         </div>
 
         {/* Actions */}

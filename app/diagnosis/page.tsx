@@ -405,7 +405,7 @@ export default function DiagnosisPage() {
           <p style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>
             直感で答えるのがオススメです。
           </p>
-          <AdBanner style={{ marginTop: 24 }} />
+          <AdBanner variant="quiz" style={{ marginTop: 24 }} />
         </div>
       </div>
     </main>
@@ -687,6 +687,43 @@ function ResultView({
         </div>
 
         <AdBanner style={{ marginBottom: 8 }} />
+
+        {/* ── 転職相談への送客枠（アフィリエイトリンクに差し替える） ── */}
+        <div
+          className="animate-fade-up"
+          style={{
+            padding: "24px 28px", marginBottom: 16, borderRadius: 12,
+            background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+            border: "1px solid rgba(245,158,11,0.3)",
+            animationDelay: "0.28s",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <span style={{ fontSize: 11, color: "#d97706", fontFamily: "'Space Mono', monospace", letterSpacing: 2, fontWeight: 700 }}>
+              PR
+            </span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "var(--text)" }}>
+              転職を本格的に考えているなら
+            </span>
+          </div>
+          <p style={{ fontSize: 14, color: "var(--text)", lineHeight: 1.8, marginBottom: 16 }}>
+            診断結果をもとに、専任のキャリアアドバイザーに無料で相談できます。
+            求人紹介・面接対策・年収交渉まで一貫してサポートしてもらえます。
+          </p>
+          <a
+            href="#"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              padding: "12px 22px", borderRadius: 10,
+              background: "linear-gradient(135deg, #f59e0b, #d97706)",
+              color: "#fff", fontSize: 14, fontWeight: 700,
+              textDecoration: "none",
+              boxShadow: "0 4px 16px rgba(245,158,11,0.35)",
+            }}
+          >
+            無料でキャリア相談する →
+          </a>
+        </div>
 
         {/* ── シェア ── */}
         <div className="card animate-fade-up" style={{ padding: "20px 24px", marginBottom: 16, animationDelay: "0.3s" }}>
