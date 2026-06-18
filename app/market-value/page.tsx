@@ -41,7 +41,7 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="exp-select-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             <button
               onClick={() => onSelect(true)}
               className="card card-hover"
@@ -62,7 +62,7 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 これからITに転職したい<br />
                 プログラミングを勉強中
               </div>
-              <div style={{
+              <div className="exp-badge" style={{
                 marginTop: 20,
                 display: "inline-block",
                 padding: "8px 18px", borderRadius: 8,
@@ -70,6 +70,7 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 border: "1px solid rgba(16,185,129,0.3)",
                 fontSize: 12, color: "#059669",
                 fontFamily: "'Space Mono', monospace",
+                whiteSpace: "nowrap",
               }}>
                 入社想定年収 + 次のステップ
               </div>
@@ -95,7 +96,7 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 現在エンジニアとして<br />
                 働いている・働いていた
               </div>
-              <div style={{
+              <div className="exp-badge" style={{
                 marginTop: 20,
                 display: "inline-block",
                 padding: "8px 18px", borderRadius: 8,
@@ -103,6 +104,7 @@ function ExperienceSelectView({ onSelect }: { onSelect: (beginner: boolean) => v
                 border: "1px solid rgba(99,102,241,0.25)",
                 fontSize: 12, color: "#6366f1",
                 fontFamily: "'Space Mono', monospace",
+                whiteSpace: "nowrap",
               }}>
                 転職市場での年収レンジを算出
               </div>

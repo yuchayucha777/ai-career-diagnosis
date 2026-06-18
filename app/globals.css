@@ -198,6 +198,34 @@ body {
   .home-cards { grid-template-columns: 1fr; }
 }
 
+/* ===== スマホ対応 ===== */
+
+/* ナビリンクをスマホで非表示 */
+@media (max-width: 640px) {
+  .home-nav-link { display: none !important; }
+  /* FeatureCard パディング縮小 */
+  .feature-card { padding: 22px 18px !important; }
+  /* 経験選択カードを縦並び */
+  .exp-select-grid { grid-template-columns: 1fr !important; }
+  /* バッジ内テキストの折り返し許可 */
+  .exp-badge { white-space: normal !important; line-height: 1.4 !important; }
+}
+
+/* Stats セパレーター：折り返し発生時に非表示 */
+@media (max-width: 500px) {
+  .stats-divider { display: none !important; }
+}
+
+/* 診断結果 イラストパネル → スマホでフル幅 */
+@media (max-width: 580px) {
+  .result-illust-panel {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(99,102,241,0.12) !important;
+  }
+  .result-text-panel { padding: 24px 18px !important; }
+}
+
 /* IT職種図鑑 */
 @keyframes zukanPop {
   from { transform: translateY(14px) scale(0.97); opacity: 0; }

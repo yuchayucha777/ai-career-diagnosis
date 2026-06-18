@@ -68,7 +68,7 @@ function ExpSelectView({ onSelect }: { onSelect: (isExperienced: boolean) => voi
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="exp-select-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             <button
               onClick={() => onSelect(false)}
               className="card card-hover"
@@ -505,7 +505,7 @@ function ResultView({
           <div style={{ position: "relative", display: "flex", gap: 0, flexWrap: "wrap" }}>
 
             {/* 左: イラスト */}
-            <div style={{
+            <div className="result-illust-panel" style={{
               width: 280,
               flexShrink: 0,
               background: `linear-gradient(135deg, ${topType.gradientFrom}18, ${topType.gradientTo}10)`,
@@ -525,7 +525,7 @@ function ResultView({
             </div>
 
             {/* 右: テキスト */}
-            <div style={{ flex: 1, minWidth: 260, padding: "36px 32px" }}>
+            <div className="result-text-panel" style={{ flex: 1, minWidth: 260, padding: "36px 32px" }}>
               <div style={{ fontSize: 12, color: topType.gradientFrom, fontFamily: "'Space Mono', monospace", marginBottom: 6, letterSpacing: 1 }}>
                 あなたのITタイプ
               </div>

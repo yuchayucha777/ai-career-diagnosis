@@ -84,6 +84,7 @@ function FeatureCard({
       href={href}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      className="feature-card"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -203,10 +204,10 @@ export default function HomePage() {
         </div>
 
         <nav style={{ display: "flex", alignItems: "center", gap: 26, fontSize: 15, fontWeight: 500 }}>
-          <Link href="/types" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
+          <Link href="/types" className="nav-link-hover home-nav-link" style={{ color: "var(--muted)", textDecoration: "none" }}>
             職種図鑑を見る
           </Link>
-          <Link href="/market-value" className="nav-link-hover" style={{ color: "var(--muted)", textDecoration: "none" }}>
+          <Link href="/market-value" className="nav-link-hover home-nav-link" style={{ color: "var(--muted)", textDecoration: "none" }}>
             市場価値を調べる
           </Link>
           <Link
@@ -294,9 +295,9 @@ export default function HomePage() {
             flexWrap: "wrap",
           }}>
             <StatBlock value={14} suffix=" 職種" label="診断できる職種数" run={run} />
-            <span style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
+            <span className="stats-divider" style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
             <StatBlock value={47} suffix="+ スキル" label="評価対象スキル" run={run} />
-            <span style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
+            <span className="stats-divider" style={{ width: 1, height: 38, background: "rgba(99,102,241,0.16)", flexShrink: 0 }} />
             <StatBlock value={3} suffix=" 分" label="平均所要時間" run={run} />
           </div>
         </section>
